@@ -1,8 +1,5 @@
 #include <stdint.h>
 
-static uint8_t * const video = (uint8_t*)0xB8000;
-static uint8_t * currentVideo = (uint8_t*)0xB8000;
-
 char getSeconds();
 char getMinutes();
 char getHour();
@@ -11,42 +8,21 @@ int getMonth();
 int getYear();
 int setHour();
 
+extern void _put_char(char c, char mod);
+extern char _get_screen_char();
+extern void _delete_char();
+extern void _put_modifier(char mod);
+extern char get_modifier();
+
 char BCDtoDecimal(char num);
 char DecimaltoBCD(char num);
 void printNumber(uint8_t n);
 void print_standby();
 
+
 /* OJO CON EL TEMA DEL MODIFICADOR */
 void putChar(char c,char mod){
-	int aux;
-	switch(c){
-			case '\n':
-				aux = currentVideo - 0xB8000;
-				currentVideo = 0xB8000 + (aux + 160) - (aux % 160);
-				*(currentVideo++) = ':';
-				*(currentVideo++) = 0x04;
-				*(currentVideo++) = ')';
-				*(currentVideo++) = 0x04;
-				break;
-			case '\b':
-				if((int)(currentVideo - 0xB8000) % 160 > 4){
-					if(*currentVideo =='_'){
-						*currentVideo = 0;
-					}
-					currentVideo -=2;
-					*(currentVideo) = 0;
-				}
-				break;
-			case 0:
-				break;
-			default:
-				*(currentVideo++) = c;
-				*(currentVideo++) = mod;
-				break;
-		}
-	if(currentVideo > 0xB8000 + 160*25){
-		currentVideo = video;
-	}
+	_put_char(c,mod);
 }
 /*void putScanCode(unsigned char value){
 	putChar(scancodeToChar(value),0x02);
@@ -54,16 +30,14 @@ void putChar(char c,char mod){
 
 void printMessage(char* message, char mod, int size){
 	for( int i = 0 ; i<size ; i++ ){
-		putChar(message[i],mod);
+		_put_char(message[i],mod);
 	}
 }
 
 
 void eraseScreen(){
-	for(int j = 0; j<25;j++){
-		for(int i = 0;i<160;i++){
-		video[160*j + i] = 0;
-		}
+	for(int j = 0; j<25*160;j++){
+		_put_char((char) 1,(char) 0);
 	}
 }
 void setTime(){
@@ -73,7 +47,6 @@ void setTime(){
 }
 
 void showRTC(){
-	currentVideo = video;
 	unsigned char tvalue;
 	unsigned char tvalue2;
 	unsigned char tvalue3;
@@ -83,10 +56,7 @@ void showRTC(){
 
 
 	eraseScreen();
-	currentVideo = video + 66;
-	printNumber(BCDtoDecimal(getHour()));
-	currentVideo = video;
-	//setHour();
+	
 	tvalue = getSeconds();
 	tvalue2 = getMinutes();
 	tvalue3 = getHour();
@@ -105,15 +75,14 @@ void showRTC(){
 	printNumber(BCDtoDecimal(tvalue2));
 	printMessage(":",0x02,1);
 	printNumber(BCDtoDecimal(tvalue));
-	currentVideo = video;
 }
 
 void printNumber(uint8_t n){
 	if(n < 10){
-		putChar(n + '0',0x04);
+		_put_char(n + '0',0x04);
 	}else{
 		printNumber(n / 10);
-		putChar((n % 10) + '0',0x04);
+		_put_char((n % 10) + '0',0x04);
 	}
 	
 }
@@ -135,12 +104,10 @@ char DecimaltoBCD(char n){
 }
 char aux;
 void print_standby(){
-	if(*currentVideo == '_'){
-		*currentVideo = aux;
-		*(currentVideo +1 ) = 0x02;
-	} else{
-		aux = *currentVideo;
-		*currentVideo = '_';
-		*(currentVideo+1) = 0x02;
+	if(get_modifier() == 0x22){
+		_put_modifier(0x00);
+	}else{
+		_put_modifier(get_modifier() | (char)0x22);
 	}
+	
 }

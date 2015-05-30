@@ -1,9 +1,3 @@
-;
-; interrups.asm
-;
-; Created on: Apr 18, 2010
-;      Author: anizzomc
-;
 
 GLOBAL _cli
 GLOBAL _sti
@@ -21,11 +15,12 @@ GLOBAL _irq02Handler
 GLOBAL _irq03Handler
 GLOBAL _irq04Handler
 GLOBAL _irq05Handler
-
+GLOBAL _int80_hand
 
 EXTERN irqDispatcher
 EXTERN int_08
 EXTERN int_09
+EXTERN sys_manager
 
 
 SECTION .text
@@ -101,6 +96,11 @@ _irq04Handler:
 ;USB
 _irq05Handler:
 	iretq
+
+
+_int80_hand:
+    call sys_manager
+    iretq
 
 
 _int_timer_hand:				; Handler de INT 8 ( Timer tick)
