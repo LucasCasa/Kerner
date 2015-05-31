@@ -7,11 +7,13 @@
 
 static uint8_t * const video = (uint8_t*)0xB8000;
 static uint8_t * currentVideo = (uint8_t*)0xB8000;
+static char * command = 0xB8000;
 
 void sys_write(char c,char mod);
 char sys_get_screen_char();
 void sys_delete_char();
 void modifie(char mod);
+
 
 char sys_manager(int order,char modifier, char other_modifier){
 	switch(order){
@@ -47,17 +49,33 @@ void sys_delete_char(){
 		*(currentVideo) = 0;
 		*(currentVideo +1) = 0x00;
 }
-
-void sys_write(char c,char mod){
+char* get_command(){
+	return command;
+}
+void draw_new_line(){
+	*(currentVideo++) = '>';
+	*(currentVideo++) = 0x04;
+	*(currentVideo++) = ':';
+	*(currentVideo++) = 0x04;
+}
+void reset_current_video(){
+	currentVideo = video;
+	draw_new_line();
+}
+void new_line(){
+	*currentVideo = 0;
 	int aux;
+	aux = currentVideo - 0xB8000;
+	currentVideo = 0xB8000 + (aux + 160) - (aux % 160);
+	draw_new_line();
+	command = currentVideo - 160;
+}
+void sys_write(char c,char mod){
 	switch(c){
 			case '\n':
-				aux = currentVideo - 0xB8000;
-				currentVideo = 0xB8000 + (aux + 160) - (aux % 160);
-				*(currentVideo++) = ':';
-				*(currentVideo++) = 0x04;
-				*(currentVideo++) = ')';
-				*(currentVideo++) = 0x04;
+				new_line();			
+				do_command();
+				command = currentVideo;
 				break;
 			case '\b':
 				sys_delete_char();

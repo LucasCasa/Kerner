@@ -48,3 +48,39 @@ void * memcpy(void * destination, const void * source, uint64_t length)
 
 	return destination;
 }
+
+void printMessage(char* message, char mod, int size){
+	for( int i = 0 ; i<size ; i++ ){
+		_put_char(message[i],mod);
+	}
+}
+
+void printNumber(uint32_t n){
+	if(n < 10){
+		_put_char(n + '0',0x04);
+	}else{
+		printNumber(n / 10);
+		_put_char((n % 10) + '0',0x04);
+	}
+	
+}
+int strcmp(const char *s1, const char *s2) {
+  int ret = 0;
+  while (!(ret = *(unsigned char *) s1 - *(unsigned char *) s2) && *s2) s1+=2, ++s2;
+  if (ret < 0)
+    ret = -1;
+  else if (ret > 0)
+    ret = 1 ;
+  return ret;
+}
+void do_command(){
+	char* aux = get_command();
+	if(strcmp(aux,"time") == 0){
+		showRTC();
+		new_line();
+	}else if(strcmp(aux,"clear") == 0){
+		eraseScreen();
+		reset_current_video();
+	}
+	
+}

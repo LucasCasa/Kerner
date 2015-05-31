@@ -28,11 +28,6 @@ void putChar(char c,char mod){
 	putChar(scancodeToChar(value),0x02);
 }*/
 
-void printMessage(char* message, char mod, int size){
-	for( int i = 0 ; i<size ; i++ ){
-		_put_char(message[i],mod);
-	}
-}
 
 
 void eraseScreen(){
@@ -53,11 +48,8 @@ void showRTC(){
 	unsigned char tvalue4;
 	unsigned char tvalue5;
 	unsigned int tvalue6;
-
-
-	eraseScreen();
 	
-	tvalue = getSeconds();
+	tvalue =  getSeconds();
 	tvalue2 = getMinutes();
 	tvalue3 = getHour();
 	tvalue4 = getDay();
@@ -75,16 +67,6 @@ void showRTC(){
 	printNumber(BCDtoDecimal(tvalue2));
 	printMessage(":",0x02,1);
 	printNumber(BCDtoDecimal(tvalue));
-}
-
-void printNumber(uint8_t n){
-	if(n < 10){
-		_put_char(n + '0',0x04);
-	}else{
-		printNumber(n / 10);
-		_put_char((n % 10) + '0',0x04);
-	}
-	
 }
 char BCDtoDecimal(char num){
 	int aux = 0;
@@ -107,7 +89,7 @@ void print_standby(){
 	if(get_modifier() == 0x22){
 		_put_modifier(0x00);
 	}else{
-		_put_modifier(get_modifier() | (char)0x22);
+		_put_modifier(0x22);
 	}
 	
 }
