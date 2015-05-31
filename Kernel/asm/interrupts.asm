@@ -18,8 +18,8 @@ GLOBAL _irq05Handler
 GLOBAL _int80_hand
 
 EXTERN irqDispatcher
-EXTERN int_08
-EXTERN int_09
+EXTERN timer_handler
+EXTERN keyboard_handler
 EXTERN sys_manager
 
 
@@ -110,7 +110,7 @@ _int_timer_hand:				; Handler de INT 8 ( Timer tick)
     mov     ax, 10h			; a utilizar.
     mov     ds, ax
     mov     es, ax
-   	call    int_08
+   	call    timer_handler
     mov		al,20h			; Envio de EOI generico al PIC
 	out		20h,al
 	
@@ -129,7 +129,7 @@ _int_keyboard_hand:				; Handler de INT 9 ( Teclado )
 	and     rax,0x00000000000000FF
     xor     rdi,rdi
     mov     rdi,rax	;Le envio el SCAN CODE como parametro a la funcion int_09
-	call 	int_09	;Llamo a la interrupcion que maneja el SCAN CODE en C
+	call 	keyboard_handler	;Llamo a la interrupcion que maneja el SCAN CODE en C
 	
 
     mov		al,20h			; Envio de EOI generico al PIC

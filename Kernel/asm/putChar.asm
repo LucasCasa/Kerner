@@ -19,6 +19,7 @@ _put_char:
 
     leave 
     ret
+    
 _put_modifier:
     push rbp
     mov rbp, rsp    

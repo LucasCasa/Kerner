@@ -8,7 +8,7 @@
 #ifndef HANDLERS_H_
 #define HANDLERS_H_
 
-void int_08();
-void int_09(char scancode);
+void timer_handler();
+void keyboard_handler(char scancode);
 
 #endif /* HANDLERS_H_ */

@@ -2,7 +2,7 @@
 //syscall 1 ---> escribo en pantalla
 //syscall 2 ---> borro caracter
 //syscall 3 ---> devuelvo el ultimo caracter
-//syscall 4 ---> modifies the modifier
+//syscall 4 ---> modifica el modificador del video
 #include "stdint.h"
 
 static uint8_t * const video = (uint8_t*)0xB8000;
