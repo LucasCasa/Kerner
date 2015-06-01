@@ -79,7 +79,7 @@ void do_command(){
 		showRTC();
 		new_line();
 	}else if(strcmp(aux,"clear") == 0){
-		eraseScreen();
+		erase_screen();
 		reset_current_video();
 	}
 	

@@ -24,17 +24,7 @@ void print_standby();
 void putChar(char c,char mod){
 	_put_char(c,mod);
 }
-/*void putScanCode(unsigned char value){
-	putChar(scancodeToChar(value),0x02);
-}*/
 
-
-
-void eraseScreen(){
-	for(int j = 0; j<25*160;j++){
-		_put_char((char) 1,(char) 0);
-	}
-}
 void setTime(){
 	int aux = BCDtoDecimal(getHour());
 	aux -=3;
@@ -87,9 +77,13 @@ char DecimaltoBCD(char n){
 char aux;
 void print_standby(){
 	if(get_modifier() == 0x22){
-		_put_modifier(0x00);
+		_put_modifier(aux);
 	}else{
+		aux = get_modifier();
 		_put_modifier(0x22);
 	}
 	
+}
+void set_last_modifier(){
+	_put_modifier(aux);
 }

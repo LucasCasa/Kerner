@@ -15,7 +15,7 @@ int kmain(){
 	IDT = 0;
 	set_interrupts();
 	setTime();
-	eraseScreen();
+	erase_screen();
 	reset_current_video();
 	printMessage("Bienvenidos al mejor TP de la historia", 0x12, 38);
 	new_line();
