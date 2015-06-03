@@ -67,12 +67,19 @@ void shell_set_last_modifier(){
 int ssaver = 0;
 shell_show_screensaver(){
 	shell_erase_screen();
-	if(ssaver){
-		maggie();
-		ssaver = 0;
-	}else{
-		lucas();
-		ssaver = 1;
+	switch(ssaver){
+		case 0:
+			lucas();
+			ssaver++;
+			break;
+		case 1:
+			maggie();
+			ssaver++;
+			break;
+		case 2:
+			kuyum();
+			ssaver = 0;
+			break;
 	}
 }
 void maggie(){
