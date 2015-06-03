@@ -24,3 +24,18 @@ void shell_show_commands(){
 void shell_erase_screen(){
 	_call_int80(5);
 }
+
+
+char aux;
+void shell_print_standby(){
+	if(get_modifier() == 0x22){
+		_put_modifier(aux);
+	}else{
+		aux = get_modifier();
+		_put_modifier(0x22);
+	}
+	
+}
+void shell_set_last_modifier(){
+	_put_modifier(aux);
+}

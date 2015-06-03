@@ -12,7 +12,7 @@ extern void lights(char l);
 void timer_handler(){
 	time++;
 	if(time == 10){
-		print_standby();
+		shell_print_standby();
 		time = 0;
 	}
 	light = (light ^ aux);

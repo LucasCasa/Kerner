@@ -4,6 +4,7 @@
 //syscall 3 ---> devuelvo el ultimo caracter
 //syscall 4 ---> modifica el modificador del video
 //syscall 5 ---> clear screen
+
 #include "stdint.h"
 
 static uint8_t * const video = (uint8_t*)0xB8000;
@@ -73,7 +74,7 @@ void reset_current_video(){
 }
 void new_line(){
 	*currentVideo = 0;
-	set_last_modifier();
+	shell_set_last_modifier();
 	int aux;
 	aux = currentVideo - 0xB8000;
 	currentVideo = 0xB8000 + (aux + 160) - (aux % 160);

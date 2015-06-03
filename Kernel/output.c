@@ -74,16 +74,3 @@ char DecimaltoBCD(char n){
 	result += n;
 	return result;
 }
-char aux;
-void print_standby(){
-	if(get_modifier() == 0x22){
-		_put_modifier(aux);
-	}else{
-		aux = get_modifier();
-		_put_modifier(0x22);
-	}
-	
-}
-void set_last_modifier(){
-	_put_modifier(aux);
-}
