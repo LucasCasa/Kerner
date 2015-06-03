@@ -123,13 +123,12 @@ _int_timer_hand:				; Handler de INT 8 ( Timer tick)
 _int_keyboard_hand:				; Handler de INT 9 ( Teclado )
     push   	rdi
     push   	rax                      ; Se salvan los registros
-                            ; Carga de DS y ES con el valor del selector
-
+                          
     xor     rax,rax
-	in 		al, 60h	;Leo el puerto del teclado
+	in 		al, 60h	              ;Leo el puerto del teclado
 	and     rax,0x00000000000000FF
     xor     rdi,rdi
-    mov     rdi,rax	;Le envio el SCAN CODE como parametro a la funcion int_09
+    mov     rdi,rax	            ;Le envio el SCAN CODE como parametro a la funcion int_09
 	call 	keyboard_handler	;Llamo a la interrupcion que maneja el SCAN CODE en C
 	
 

@@ -9,6 +9,6 @@
 #define HANDLERS_H_
 
 void timer_handler();
-void keyboard_handler(char scancode);
+void keyboard_handler(uint8_t scancode);
 
 #endif /* HANDLERS_H_ */

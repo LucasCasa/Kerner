@@ -9,7 +9,9 @@
 
 static uint8_t * const video = (uint8_t*)0xB8000;
 static uint8_t * currentVideo = (uint8_t*)0xB8000;
+static uint8_t * saved_current_video;
 static char * command = 0xB8000;
+char* saved_shell[160*25];
 
 void sys_write(char c,char mod);
 char sys_get_screen_char();
@@ -71,6 +73,18 @@ void draw_new_line(){
 void reset_current_video(){
 	currentVideo = video;
 	draw_new_line();
+}
+void save_screen(){
+	for(int i = 0; i<160*25;i++){
+		saved_shell[i] = video[i];
+	}
+	saved_current_video = currentVideo;
+}
+void restore_screen(){
+	for(int i = 0; i<160*25;i++){
+		video[i] = saved_shell[i];
+	}
+	currentVideo = saved_current_video;
 }
 void new_line(){
 	*currentVideo = 0;
