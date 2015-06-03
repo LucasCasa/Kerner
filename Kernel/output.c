@@ -57,6 +57,7 @@ void showRTC(){
 	printNumber(BCDtoDecimal(tvalue2));
 	printMessage(":",0x02);
 	printNumber(BCDtoDecimal(tvalue));
+	printMessage("\n");
 }
 char BCDtoDecimal(char num){
 	int aux = 0;

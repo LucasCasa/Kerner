@@ -19,4 +19,10 @@ typedef struct {
   uint64_t base;
 } IDTR;
 
+typedef struct {
+  char* name;
+  char* description;
+  void(* function)();
+  
+} Command;
 #endif
