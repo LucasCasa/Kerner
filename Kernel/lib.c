@@ -49,9 +49,11 @@ void * memcpy(void * destination, const void * source, uint64_t length)
 	return destination;
 }
 
-void printMessage(char* message, char mod, int size){
-	for( int i = 0 ; i<size ; i++ ){
+void printMessage(char* message, char mod){
+	int i = 0;
+	while(message[i] != 0){
 		_put_char(message[i],mod);
+		i++;
 	}
 }
 
@@ -72,15 +74,4 @@ int strcmp(const char *s1, const char *s2) {
   else if (ret > 0)
     ret = 1 ;
   return ret;
-}
-void do_command(){
-	char* aux = get_command();
-	if(strcmp(aux,"time") == 0){
-		showRTC();
-		new_line();
-	}else if(strcmp(aux,"clear") == 0){
-		erase_screen();
-		reset_current_video();
-	}
-	
 }

@@ -45,17 +45,17 @@ void showRTC(){
 	tvalue4 = getDay();
 	tvalue5 = getMonth();
 	tvalue6 = getYear();
-	printMessage("Day: ",0x02,5);
+	printMessage("Day: ",0x02);
 	printNumber(BCDtoDecimal(tvalue4));
-	printMessage(" Month: ",0x02,8);
+	printMessage(" Month: ",0x02);
 	printNumber(BCDtoDecimal(tvalue5));
-	printMessage(" Year: ",0x02,7); //COMO implemento la ñ??
+	printMessage(" Year: ",0x02); //COMO implemento la ñ??
 	printNumber(BCDtoDecimal(tvalue6));
-	printMessage(" Time: ",0x02,7);
+	printMessage(" Time: ",0x02);
 	printNumber(BCDtoDecimal(tvalue3));
-	printMessage(":",0x02,1);
+	printMessage(":",0x02);
 	printNumber(BCDtoDecimal(tvalue2));
-	printMessage(":",0x02,1);
+	printMessage(":",0x02);
 	printNumber(BCDtoDecimal(tvalue));
 }
 char BCDtoDecimal(char num){

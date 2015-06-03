@@ -3,6 +3,7 @@
 //syscall 2 ---> borro caracter
 //syscall 3 ---> devuelvo el ultimo caracter
 //syscall 4 ---> modifica el modificador del video
+//syscall 5 ---> clear screen
 #include "stdint.h"
 
 static uint8_t * const video = (uint8_t*)0xB8000;
@@ -32,6 +33,11 @@ char sys_manager(int order,char modifier, char other_modifier){
 		case 4:
 			modifie(modifier);
 			break;
+		case 5:
+			erase_screen();
+			reset_current_video();
+			break;
+
 	}
 	return 0;
 }
@@ -82,7 +88,7 @@ void sys_write(char c,char mod){
 				if(check_end_of_screen()){
 					command -= 160;
 				}
-				do_command();
+				shell_command();
 				command = currentVideo;
 				break;
 			case '\b':

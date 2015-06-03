@@ -16,6 +16,7 @@ GLOBAL _irq03Handler
 GLOBAL _irq04Handler
 GLOBAL _irq05Handler
 GLOBAL _int80_hand
+GLOBAL _call_int80
 
 EXTERN irqDispatcher
 EXTERN timer_handler
@@ -138,6 +139,13 @@ _int_keyboard_hand:				; Handler de INT 9 ( Teclado )
     pop     rax
     pop     rdi
     iretq
+
+_call_int80:
+    push    rbp
+    mov     rbp, rsp
+    int     80h
+    leave
+    ret
 
 haltcpu:
 	cli
