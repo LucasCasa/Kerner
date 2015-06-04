@@ -80,6 +80,9 @@ void shell_erase_screen(){
 void shell_set_last_modifier(){
 	_put_modifier(aux);
 }
+void shell_enter_pressed(){
+	shell_command();
+}
 
 void showRTC(){
 	unsigned char tvalue;

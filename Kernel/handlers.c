@@ -32,7 +32,6 @@ void timer_handler(){
 void keyboard_handler(uint8_t scancode){
 	if(scancode != 250){
 		
-		
 		if(sleep_time >= 100){
 			restore_screen();
 		}else{
@@ -40,6 +39,9 @@ void keyboard_handler(uint8_t scancode){
 				keyboard_set_key(scancode_to_char(scancode));
 				putChar(scancode_to_char(scancode),0x02);
 			}
+		}
+		if(scancode_to_char(scancode) == '\n'){
+			shell_enter_pressed();
 		}
 		sleep_time = 0;
 	}

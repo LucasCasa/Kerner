@@ -97,18 +97,16 @@ void new_line(){
 	aux = currentVideo - 0xB8000;
 	currentVideo = 0xB8000 + (aux + 160) - (aux % 160);
 	draw_new_line();
-
-	command = currentVideo - 160;
 }
 void sys_write(char c,char mod){
 	switch(c){
 			case '\n':
 				new_line();			
-				if(check_end_of_screen()){
+				/*if(check_end_of_screen()){
 					command -= 160;
 				}
 				shell_command();
-				command = currentVideo;
+				command = currentVideo;*/
 				break;
 			case '\b':
 				sys_delete_char();
