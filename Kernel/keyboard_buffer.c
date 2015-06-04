@@ -21,7 +21,7 @@ uint8_t keyboard_is_empty() {
 
 void keyboard_clear() {
 	keyboard_actual = 0;
-	keyboard_last = 0;
+	keyboard_last = 0;	
 	size = 0;
 }
 uint8_t keyboard_size(){
@@ -29,7 +29,7 @@ uint8_t keyboard_size(){
 }
 uint8_t keyboard_set_key(uint8_t c) {
 	if( !keyboard_is_full() ) {
-		if(c == '\b'){
+		if(c == '\b' && size > 0){
 			keyboard_last--;
 			size--;
 		}else if(c == 0){
