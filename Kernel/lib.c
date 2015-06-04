@@ -76,6 +76,28 @@ int strcmp(const uint8_t *s1, const uint8_t *s2) {
     ret = 1 ;
   return ret;
 }
+int strlen(const char * str){
+	int size =0;
+	for(int i=0;str[i]!=0;i++){
+		size++;
+	}
+	return size;
+}
+
+int isNumber(char a){
+	if(a=='0' || a=='1' || a=='2' || a=='3' || a=='4' || a=='5' || a=='6' || a=='7' || a=='8' || a=='9')
+		return 1;
+	else
+		return 0;
+}
+
+int pow(int x, unsigned int y){
+	int resp=1;
+	for(int i=1;i<y;i++){
+		resp*=x;
+	}
+	return resp;
+}
 void putChar(uint8_t c,uint8_t mod){
 	_put_char(c,mod);
 }
@@ -95,14 +117,6 @@ uint8_t DecimaltoBCD(uint8_t n){
 	result = (result << 4);
 	result += n;
 	return result;
-}
-
-int strlen(const char * str){
-	int size =0;
-	for(int i=0;str[i]!=0;i++){
-		size++;
-	}
-	return size;
 }
 
 void printf(const char * string, ...){
