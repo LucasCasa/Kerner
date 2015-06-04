@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdarg.h>
 
 void * memset(void * destination, int32_t c, uint64_t length)
 {
@@ -74,4 +75,40 @@ int strcmp(const char *s1, const char *s2) {
   else if (ret > 0)
     ret = 1 ;
   return ret;
+}
+
+int strlen(const char * str){
+	int size =0;
+	for(int i=0;str[i]!=0;i++){
+		size++;
+	}
+	return size;
+}
+
+void printf(const char * string, ...){
+	char c;
+	va_list listpointer;
+	va_start(listpointer, string);
+	for(int i=0; string[i] != '\0'; i++){
+		c = string[i];
+		if(c=='\n'){
+			new_line();
+		}
+		else if(c == '%'){
+			switch(string[i+1]){
+				case 'd':	printNumber(va_arg(listpointer,int));
+							i++;
+							break;
+				case 's':	printMessage(va_arg(listpointer,char *), 15);
+							i++;
+							break;
+				default: 	_put_char(string[i], 15);
+							break;
+			}
+		}
+		else{
+			_put_char(string[i], 15); // 15 para fondo negro letras blancas
+		}
+	}
+	va_end(listpointer);
 }
