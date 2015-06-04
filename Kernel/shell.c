@@ -47,6 +47,10 @@ void shell_command(){
 
 }
 
+void shell_exit(){
+    
+}
+
 void shell_show_commands(){
 	for(int i=0 ;i<number_of_commands;i++){
 		printMessage(commands[i].name, 0x05);
