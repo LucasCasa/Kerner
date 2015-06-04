@@ -1,8 +1,8 @@
 #include "include/typedef.h"
 
-Command commands[5];
+Command commands[7];
 char comm[20];
-int number_of_commands = 5;
+int number_of_commands = 7;
 char aux;
 
 
@@ -12,13 +12,18 @@ void lucas();
 void showRTC();
 void shell_erase_screen();
 void _shutdown_asm();
+void changeTime();
+void shell_show_commands();
+void shell_exit();
 
 void shell_init(){
-	init_commands( 0 , "clear" , "borra la pantalla" , &shell_erase_screen);
-	init_commands( 1 , "time" , "muestra el reloj" , &showRTC);
-	init_commands( 2 , "maggie" , "BEST COMMAND EVER" , &maggie);
-	init_commands( 3 , "lucas" , "HOLA GENTE" , &lucas);
-	init_commands( 4 , "shutdown" , "APAGA" , &_shutdown_asm);
+	init_commands(0,"clear","borra la pantalla",&shell_erase_screen);
+	init_commands(1,"time","muestra el reloj" , &showRTC);
+	init_commands(2,"help" , "muestra comandos disponibles", &shell_show_commands);
+	init_commands(3,"change time", "cambia fecha y hora del sistema" , &changeTime);
+	init_commands(4,"shutdown","cerrar el proyecto", &shell_exit);
+	init_commands( 5 , "maggie" , "BEST COMMAND EVER" , &maggie);
+	init_commands( 6, "lucas" , "HOLA GENTE" , &lucas);
 	shell_erase_screen();
 	printMessage("Bienvenidos al mejor TP de la historia\n", 0x12);
 }
@@ -43,7 +48,12 @@ void shell_command(){
 }
 
 void shell_show_commands(){
-	
+	for(int i=0 ;i<number_of_commands;i++){
+		printMessage(commands[i].name, 0x05);
+		printMessage(" - ", 0x05);
+		printMessage(commands[i].description, 0x05);
+		printMessage("\n",0x05);
+	}
 }
 
 void shell_erase_screen(){
