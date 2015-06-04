@@ -14,7 +14,6 @@ void set_interrupts();
 int kmain(){
 	IDT = 0;
 	set_interrupts();
-	setTime();
 	shell_init();
 	return 0;
 }

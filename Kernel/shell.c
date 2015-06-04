@@ -1,4 +1,9 @@
-#include "include/typedef.h"
+typedef struct {
+  char* name;
+  char* description;
+  void(* function)();
+  
+} Command;
 
 Command commands[7];
 char comm[20];
@@ -25,14 +30,17 @@ void shell_init(){
 	init_commands( 5 , "maggie" , "BEST COMMAND EVER" , &maggie);
 	init_commands( 6, "lucas" , "HOLA GENTE" , &lucas);
 	shell_erase_screen();
-	printMessage("Bienvenidos al mejor TP de la historia\n", 0x12);
+	print_message("Bienvenidos al mejor TP de la historia\n", 0x12);
 }
+
 void init_commands(char index, char * name, char* description, void (*function)()){
 	commands[index].name = name;
 	commands[index].description = description;
 	commands[index].function = function;
 }
+
 void shell_command(){
+	char valid_command = 0;
 	char c = 0,j = 0;
 	while(!keyboard_is_empty() && (c = keyboard_get_key()) != '\n' && j<19){
 		comm[j] = c;
@@ -42,7 +50,11 @@ void shell_command(){
 	for(int i = 0;i<number_of_commands;i++){
 		if(strcmp(comm,commands[i].name) == 0){
 			commands[i].function();
+			valid_command = 1;
 		}
+	}
+	if(valid_command == 0){
+		//print_message("Comando Invalido\n");
 	}
 
 }
@@ -53,10 +65,10 @@ void shell_exit(){
 
 void shell_show_commands(){
 	for(int i=0 ;i<number_of_commands;i++){
-		printMessage(commands[i].name, 0x05);
-		printMessage(" - ", 0x05);
-		printMessage(commands[i].description, 0x05);
-		printMessage("\n",0x05);
+		print_message(commands[i].name, 0x05);
+		print_message(" - ", 0x05);
+		print_message(commands[i].description, 0x05);
+		print_message("\n",0x05);
 	}
 }
 
@@ -65,69 +77,36 @@ void shell_erase_screen(){
 }
 
 
-
-void shell_print_standby(){
-	if(get_modifier() == 0x22){
-		_put_modifier(aux);
-	}else{
-		aux = get_modifier();
-		_put_modifier(0x22);
-	}
-	
-}
 void shell_set_last_modifier(){
 	_put_modifier(aux);
 }
-int ssaver = 0;
-shell_show_screensaver(){
-	shell_erase_screen();
-	switch(ssaver){
-		case 0:
-			lucas();
-			ssaver++;
-			break;
-		case 1:
-			maggie();
-			ssaver++;
-			break;
-		case 2:
-			kuyum();
-			ssaver = 0;
-			break;
-	}
-}
-void maggie(){
 
-	printMessage(" _______  _______  _______  _______ _________ _______ \n",0x02);
-	printMessage("(       )(  ___  )(  ____ \\(  ____ \\\\__   __/(  ____ \\ \n",0x02);
-	printMessage("| () () || (   ) || (    \\/| (    \\/   ) (   | (    \\/ \n",0x02);
-	printMessage("| || || || (___) || |      | |         | |   | (__  \n",0x02);
-	printMessage("| |(_)| ||  ___  || | ____ | | ____    | |   |  __)   \n",0x02);
-	printMessage("| |   | || (   ) || | \\_  )| | \\_  )   | |   | (   \n",0x02);
-	printMessage("| )   ( || )   ( || (___) || (___) |___) (___| (____/\\ \n",0x02);
-	printMessage("|/     \\||/     \\|(_______)(_______)\\_______/(_______/ \n",0x02);
-
-}
-
-void lucas(){
-	printMessage(" _                 _______  _______  _______ \n",0x03);
-	printMessage("( \\      |\\     /|(  ____ \\(  ___  )(  ____ \\ \n",0x03);
-	printMessage("| (      | )   ( || (    \\/| (   ) || (    \\/ \n",0x03);
-	printMessage("| |      | |   | || |      | (___) || (_____  \n",0x03);
-	printMessage("| |      | |   | || |      |  ___  |(_____  ) \n",0x03);
-	printMessage("| |      | |   | || |      | (   ) |      ) | \n",0x03);
-	printMessage("| (____/\\| (___) || (____/\\| )   ( |/\\____) | \n",0x03);
-	printMessage("(_______/(_______)(_______/|/     \\|\\_______) \n",0x03);
+void showRTC(){
+	unsigned char tvalue;
+	unsigned char tvalue2;
+	unsigned char tvalue3;
+	unsigned char tvalue4;
+	unsigned char tvalue5;
+	unsigned int tvalue6;
+	
+	tvalue =  getSeconds();
+	tvalue2 = getMinutes();
+	tvalue3 = getHour();
+	tvalue4 = getDay();
+	tvalue5 = getMonth();
+	tvalue6 = getYear();
+	print_message("Day: ",0x02);
+	print_number(BCDtoDecimal(tvalue4));
+	print_message(" Month: ",0x02);
+	print_number(BCDtoDecimal(tvalue5));
+	print_message(" Year: ",0x02); //COMO implemento la ñ??
+	print_number(BCDtoDecimal(tvalue6));
+	print_message(" Time: ",0x02);
+	print_number(BCDtoDecimal(tvalue3));
+	print_message(":",0x02);
+	print_number(BCDtoDecimal(tvalue2));
+	print_message(":",0x02);
+	print_number(BCDtoDecimal(tvalue));
+	print_message("\n");
 }
 
-void kuyum(){
-printMessage(" _                                   _______ \n",0x04);
-printMessage("| \\    /\\|\\     /||\\     /||\\     /|(       )\n",0x04);
-printMessage("|  \\  / /| )   ( |( \\   / )| )   ( || () () | \n",0x04);
-printMessage("|  (_/ / | |   | | \\ (_) / | |   | || || || | \n",0x04);
-printMessage("|   _ (  | |   | |  \\   /  | |   | || |(_)| | \n",0x04);
-printMessage("|  ( \\ \\ | |   | |   ) (   | |   | || |   | | \n",0x04);
-printMessage("|  /  \\ \\| (___) |   | |   | (___) || )   ( | \n",0x04);
-printMessage("|_/    \\/(_______)   \\_/   (_______)|/     \\| \n",0x04);
-                                             
-}

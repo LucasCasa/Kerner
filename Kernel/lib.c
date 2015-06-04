@@ -1,10 +1,11 @@
 #include <stdint.h>
 #include <stdarg.h>
 
+
 void * memset(void * destination, int32_t c, uint64_t length)
 {
 	uint8_t chr = (uint8_t)c;
-	char * dst = (char*)destination;
+	uint8_t * dst = (uint8_t*)destination;
 
 	while(length--)
 		dst[length] = chr;
@@ -50,7 +51,7 @@ void * memcpy(void * destination, const void * source, uint64_t length)
 	return destination;
 }
 
-void printMessage(char* message, char mod){
+void print_message(uint8_t* message, uint8_t mod){
 	int i = 0;
 	while(message[i] != 0){
 		_put_char(message[i],mod);
@@ -58,23 +59,42 @@ void printMessage(char* message, char mod){
 	}
 }
 
-void printNumber(uint32_t n){
+void print_number(uint32_t n){
 	if(n < 10){
 		_put_char(n + '0',0x04);
 	}else{
-		printNumber(n / 10);
+		print_number(n / 10);
 		_put_char((n % 10) + '0',0x04);
 	}
-	
 }
-int strcmp(const char *s1, const char *s2) {
+int strcmp(const uint8_t *s1, const uint8_t *s2) {
   int ret = 0;
-  while (!(ret = *(unsigned char *) s1 - *(unsigned char *) s2) && *s2) ++s1, ++s2;
+  while (!(ret = *(uint8_t *) s1 - *(uint8_t *) s2) && *s2) ++s1, ++s2;
   if (ret < 0)
     ret = -1;
   else if (ret > 0)
     ret = 1 ;
   return ret;
+}
+void putChar(uint8_t c,uint8_t mod){
+	_put_char(c,mod);
+}
+
+uint8_t BCDtoDecimal(uint8_t num){
+	int aux = 0;
+	aux = (num >> 4) * 10;
+	aux += (num & 15);
+	return aux;
+}
+uint8_t DecimaltoBCD(uint8_t n){
+	int result = 0;
+	while(n>10){
+		result++;
+		n -= 10;
+	}
+	result = (result << 4);
+	result += n;
+	return result;
 }
 
 int strlen(const char * str){
@@ -96,10 +116,10 @@ void printf(const char * string, ...){
 		}
 		else if(c == '%'){
 			switch(string[i+1]){
-				case 'd':	printNumber(va_arg(listpointer,int));
+				case 'd':	print_number(va_arg(listpointer,int));
 							i++;
 							break;
-				case 's':	printMessage(va_arg(listpointer,char *), 15);
+				case 's':	print_message(va_arg(listpointer,char *), 15);
 							i++;
 							break;
 				default: 	_put_char(string[i], 15);

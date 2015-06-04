@@ -35,12 +35,6 @@ uint8_t keyboard_set_key(uint8_t c) {
 		if( keyboard_last == KB_SIZE )
 			keyboard_last = 0;
 
-		//AUXILIAR PARA VER LOS SCAN CODES
-		//printChar('\n');
-	//	printNumber(c);
-	//	printBinary(c);
-		//printChar('\n');
-
 		return 1;
 	}
 	return 0;
@@ -49,8 +43,8 @@ uint8_t keyboard_set_key(uint8_t c) {
 uint8_t keyboard_get_key(){
 	uint8_t c;
 
-	while( keyboard_is_empty() ); //Si no vino ninguna letra se queda bloqueado esperando
-
+	while( keyboard_is_empty() ); 
+	
 	if( !keyboard_is_empty() ) {
 		c = keyboard_buffer[keyboard_actual++];
 		if( keyboard_actual == KB_SIZE )

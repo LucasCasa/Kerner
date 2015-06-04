@@ -18,11 +18,4 @@ typedef struct {
   uint16_t limit;
   uint64_t base;
 } IDTR;
-
-typedef struct {
-  char* name;
-  char* description;
-  void(* function)();
-  
-} Command;
 #endif

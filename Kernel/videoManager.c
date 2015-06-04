@@ -4,6 +4,7 @@
 //syscall 3 ---> devuelvo el ultimo caracter
 //syscall 4 ---> modifica el modificador del video
 //syscall 5 ---> clear screen
+// syscall 6 --->
 
 #include "stdint.h"
 
@@ -12,7 +13,7 @@ static uint8_t * currentVideo = (uint8_t*)0xB8000;
 static uint8_t * saved_current_video;
 static char * command = 0xB8000;
 char* saved_shell[160*25];
-
+char saved_modifier;
 void sys_write(char c,char mod);
 char sys_get_screen_char();
 void sys_delete_char();
@@ -40,7 +41,9 @@ char sys_manager(int order,char modifier, char other_modifier){
 			erase_screen();
 			reset_current_video();
 			break;
-
+		case 6:
+			return keyboard_get_key();
+			break;
 	}
 	return 0;
 }
@@ -79,6 +82,7 @@ void save_screen(){
 		saved_shell[i] = video[i];
 	}
 	saved_current_video = currentVideo;
+	currentVideo = video;
 }
 void restore_screen(){
 	for(int i = 0; i<160*25;i++){
@@ -88,7 +92,7 @@ void restore_screen(){
 }
 void new_line(){
 	*currentVideo = 0;
-	shell_set_last_modifier();
+	*(currentVideo+1) = saved_modifier;
 	int aux;
 	aux = currentVideo - 0xB8000;
 	currentVideo = 0xB8000 + (aux + 160) - (aux % 160);
@@ -141,4 +145,66 @@ void erase_screen(){
 	for(int j = 0; j<25*160;j++){
 		video[j] = 0;
 	}
+}
+void print_standby(){
+	if(get_modifier() == 0x22){
+		_put_modifier(saved_modifier);
+	}else{
+		saved_modifier = get_modifier();
+		_put_modifier(0x22);
+	}
+	
+}
+
+int ssaver = 0;
+show_screensaver(){
+	erase_screen();
+	reset_current_video();
+	switch(ssaver){
+		case 0:
+			lucas();
+			ssaver++;
+			break;
+		case 1:
+			maggie();
+			ssaver++;
+			break;
+		case 2:
+			kuyum();
+			ssaver = 0;
+			break;
+	}
+}
+
+void maggie(){
+	print_message(" _______  _______  _______  _______ _________ _______ \n",0x02);
+	print_message("(       )(  ___  )(  ____ \\(  ____ \\\\__   __/(  ____ \\ \n",0x02);
+	print_message("| () () || (   ) || (    \\/| (    \\/   ) (   | (    \\/ \n",0x02);
+	print_message("| || || || (___) || |      | |         | |   | (__  \n",0x02);
+	print_message("| |(_)| ||  ___  || | ____ | | ____    | |   |  __)   \n",0x02);
+	print_message("| |   | || (   ) || | \\_  )| | \\_  )   | |   | (   \n",0x02);
+	print_message("| )   ( || )   ( || (___) || (___) |___) (___| (____/\\ \n",0x02);
+	print_message("|/     \\||/     \\|(_______)(_______)\\_______/(_______/ \n",0x02);
+}
+
+void lucas(){
+	print_message(" _                 _______  _______  _______ \n",0x03);
+	print_message("( \\      |\\     /|(  ____ \\(  ___  )(  ____ \\ \n",0x03);
+	print_message("| (      | )   ( || (    \\/| (   ) || (    \\/ \n",0x03);
+	print_message("| |      | |   | || |      | (___) || (_____  \n",0x03);
+	print_message("| |      | |   | || |      |  ___  |(_____  ) \n",0x03);
+	print_message("| |      | |   | || |      | (   ) |      ) | \n",0x03);
+	print_message("| (____/\\| (___) || (____/\\| )   ( |/\\____) | \n",0x03);
+	print_message("(_______/(_______)(_______/|/     \\|\\_______) \n",0x03);
+}
+
+void kuyum(){
+	print_message(" _                                   _______ \n",0x04);
+	print_message("| \\    /\\|\\     /||\\     /||\\     /|(       )\n",0x04);
+	print_message("|  \\  / /| )   ( |( \\   / )| )   ( || () () | \n",0x04);
+	print_message("|  (_/ / | |   | | \\ (_) / | |   | || || || | \n",0x04);
+	print_message("|   _ (  | |   | |  \\   /  | |   | || |(_)| | \n",0x04);
+	print_message("|  ( \\ \\ | |   | |   ) (   | |   | || |   | | \n",0x04);
+	print_message("|  /  \\ \\| (___) |   | |   | (___) || )   ( | \n",0x04);
+	print_message("|_/    \\/(_______)   \\_/   (_______)|/     \\| \n",0x04);
 }
