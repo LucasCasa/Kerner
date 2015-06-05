@@ -31,6 +31,9 @@ void shell_init(){
 	init_commands( 6, "lucas" , "HOLA GENTE" , &lucas);
 	shell_erase_screen();
 	print_message("Bienvenidos al mejor TP de la historia\n", 0x12);
+	while(1){
+		shell_command();
+	}
 }
 
 void init_commands(char index, char * name, char* description, void (*function)()){
@@ -42,7 +45,7 @@ void init_commands(char index, char * name, char* description, void (*function)(
 void shell_command(){
 	char valid_command = 0;
 	char c = 0,j = 0;
-	while(!keyboard_is_empty() && (c = keyboard_get_key()) != '\n' && j<19){
+	while((c = keyboard_get_key()) != '\n' && j<19){
 		comm[j] = c;
 		j++;
 	}
@@ -79,9 +82,6 @@ void shell_erase_screen(){
 
 void shell_set_last_modifier(){
 	_put_modifier(aux);
-}
-void shell_enter_pressed(){
-	shell_command();
 }
 
 void showRTC(){

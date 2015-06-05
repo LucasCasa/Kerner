@@ -28,6 +28,7 @@ uint8_t keyboard_size(){
 	return size;	
 }
 uint8_t keyboard_set_key(uint8_t c) {
+	
 	if( !keyboard_is_full() ) {
 		if(c == '\b' && size > 0){
 			keyboard_last--;
@@ -40,17 +41,19 @@ uint8_t keyboard_set_key(uint8_t c) {
 		}
 		if( keyboard_last == KB_SIZE )
 			keyboard_last = 0;
-
+	
 		return 1;
+
 	}
+	
 	return 0;
 }
 
 uint8_t keyboard_get_key(){
 	uint8_t c;
 
-	while( keyboard_is_empty() ); 
-	
+	while(keyboard_is_empty()) {}
+
 	if( !keyboard_is_empty() ) {
 		c = keyboard_buffer[keyboard_actual++];
 		if( keyboard_actual == KB_SIZE )
@@ -59,7 +62,6 @@ uint8_t keyboard_get_key(){
 		lastKeyRead = c;
 		if(size > 0) 
 			size--;
-		
 		return c;
 	}
 	return 0;
@@ -69,3 +71,6 @@ unsigned char keyboard_last_key_read(void) {
 	return lastKeyRead;
 }
 
+void load_user_buffer(){
+
+}

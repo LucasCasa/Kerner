@@ -31,7 +31,7 @@ void changeTime(){
 		char * aux;
 		int value;
 		int resp;
-		printMessage(INPUT[i],0x0F);
+		print_message(INPUT[i],0x0F);
 		aux=readKeyboard();
 		resp=validate(aux,&value,MAX_VALUES[i],MIN_VALUES[i]); //Valida que se hayan escrito numeros de como maximo 2 caracteres y que este correcto el parametro
 		if(resp==SI){
@@ -92,9 +92,9 @@ validateDay(int day, int month, int year){
 char * readKeyboard(){
 	char c = 0,j = 0;
 	char aux[80];
-	while(!keyboard_is_empty() && (c = keyboard_get_key()) != '\n' && j<19){ //lee lo ultimo que se escribio en el teclado
-		aux[j] = c;
-		j++;
+	while((c = keyboard_get_key()) != '\n'&& j<19){ //lee lo ultimo que se escribio en el teclado
+			aux[j] = c;
+			j++;
 	}
 	aux[j] = 0;
 	return aux;

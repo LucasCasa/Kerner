@@ -22,7 +22,7 @@ EXTERN irqDispatcher
 EXTERN timer_handler
 EXTERN keyboard_handler
 EXTERN sys_manager
-
+EXTERN print_message
 
 SECTION .text
 
@@ -112,6 +112,7 @@ _int_timer_hand:				; Handler de INT 8 ( Timer tick)
     mov     ds, ax
     mov     es, ax
    	call    timer_handler
+    
     mov		al,20h			; Envio de EOI generico al PIC
 	out		20h,al
 	

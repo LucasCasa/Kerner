@@ -40,9 +40,6 @@ void keyboard_handler(uint8_t scancode){
 				putChar(scancode_to_char(scancode),0x02);
 			}
 		}
-		if(scancode_to_char(scancode) == '\n'){
-			shell_enter_pressed();
-		}
 		sleep_time = 0;
 	}
 

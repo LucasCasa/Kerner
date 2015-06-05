@@ -1,10 +1,5 @@
 
-//syscall 1 ---> escribo en pantalla
-//syscall 2 ---> borro caracter
-//syscall 3 ---> devuelvo el ultimo caracter
-//syscall 4 ---> modifica el modificador del video
-//syscall 5 ---> clear screen
-// syscall 6 --->
+
 
 #include "stdint.h"
 
@@ -21,32 +16,6 @@ void modifie(char mod);
 char check_end_of_screen();
 
 
-char sys_manager(int order,char modifier, char other_modifier){
-	switch(order){
-		case 1:
-			sys_write(modifier,other_modifier);
-			break;
-
-		case 2:
-			sys_delete_char();
-			break;
-
-		case 3:
-			return sys_get_screen_char();
-			break;
-		case 4:
-			modifie(modifier);
-			break;
-		case 5:
-			erase_screen();
-			reset_current_video();
-			break;
-		case 6:
-			return keyboard_get_key();
-			break;
-	}
-	return 0;
-}
 char get_modifier(){
 	return *(currentVideo +1);
 }
