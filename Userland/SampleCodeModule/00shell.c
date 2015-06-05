@@ -32,7 +32,7 @@ int main(){
 	shell_erase_screen();
 	print_message("Bienvenidos al mejor TP de la historia\n", 0x12);
 	while(1){
-		//shell_command();
+		shell_command();
 	}
 }
 
@@ -46,14 +46,11 @@ void shell_command(){
 	char valid_command = 0;
 	char c = 0,j = 0;
 	int size;
-	/*while((c = clean_get_char()) != '\n' && j<19){
-		comm[j] = c;
-		j++;
-	}*/
-	size = _call_int80(6,comm,0);	
+	while((c = get_char()) != '\n'){
+		comm[j++] = c;
+	}
 
-	comm[size] = 0;
-	printf(comm,0x03);
+	comm[j] = 0;
 	for(int i = 0;i<number_of_commands;i++){
 		if(strcmp(comm,commands[i].name) == 0){
 			commands[i].function();
@@ -61,7 +58,7 @@ void shell_command(){
 		}
 	}
 	if(valid_command == 0){
-		//print_message("Comando Invalido\n");
+		print_message("Comando Invalido\n",0x34);
 	}
 
 }

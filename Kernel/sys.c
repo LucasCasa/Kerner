@@ -8,7 +8,9 @@
 
 char read(char* buff, char size);
 char read_char();
+
 char sys_manager(int order,uint64_t arg1, uint64_t arg2){
+	char c;
 	switch(order){
 		case 1:
 			sys_write((char) arg1,(char) arg2);
@@ -32,20 +34,26 @@ char sys_manager(int order,uint64_t arg1, uint64_t arg2){
 			return read( (uint8_t*) arg1,(uint8_t) arg2);
 			break;
 		case 7:
-			return read_char();
+			c = read_char();
+			return c;
+			break;
 	}
 	return 0;
 }
 char read_char(){
-	while(C_is_empty()){}
-		return clean_get_char();
+	if(C_is_empty())
+		return 0;
+	char c = clean_get_char();
+	return c;
 }
 char read(char* buff, char size){
 	int i;
-	while(C_is_empty() ){}
+	if(C_is_empty())
+		return 0;
+
 
 	if(size == 0)
-		size == 255;
+		size = 255;
 
 	char c;
 	for( i= 0; i<size && (c = clean_get_char()) != '\n';i++){

@@ -30,7 +30,6 @@ char clean_get_char(){
 
 	if(Csize > 0) 
 		Csize--;
-
 	return c;
 }
 

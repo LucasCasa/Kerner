@@ -112,9 +112,10 @@ void printf(const char * string, ...){
 	}
 	va_end(listpointer);
 }
-void scanf(char* str, uint8_t size){
-	while( _call_int80(6,str,size) == 0){
-
-	}
-
+char get_char(){
+	char c;
+	do{
+		c = _call_int80(7);
+	}while(c == 0);
+	return c;
 }
