@@ -76,6 +76,18 @@ int strcmp(const uint8_t *s1, const uint8_t *s2) {
     ret = 1 ;
   return ret;
 }
+int atoi(char * string){
+	int num=0;
+	while(*string!=0 && num>=0){		
+		num = num*10;
+		if(isNumber(*string))
+			num=num+(*str-'0');
+		else 
+			num=-1;
+		str++;
+	}
+	return num;
+}
 int strlen(const char * str){
 	int size =0;
 	for(int i=0;str[i]!=0;i++){

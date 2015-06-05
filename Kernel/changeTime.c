@@ -24,23 +24,20 @@ int validateDay(int day, int month, int year);
 void changeTime(){
 	int parameters[6];
 	int size = 6,i=0;
-	int resp=NO;
 	//int year,month,day,hour,min,sec;
 	showRTC(); //Imprime el tiempo para que lo vea antes de preguntarle por cambiar
-	while(i<size && resp==NO){
+	while(i<size){
 		char * aux;
 		int value;
-		int resp;
 		print_message(INPUT[i],0x0F);
 		aux=readKeyboard();
-		resp=validate(aux,&value,MAX_VALUES[i],MIN_VALUES[i]); //Valida que se hayan escrito numeros de como maximo 2 caracteres y que este correcto el parametro
-		if(resp==SI){
-			if(i==2 && validateDay(value,parameters[i-1],parameters[i-2])==NO){
-				resp==NO;
-			}
-			else{
-			parameters[i]=value;
-			i++;				
+		value=atoi(aux);
+		if(validate(value,MAX_VALUES[i],MIN_VALUES[i])){
+			if(i==2 && validateDay(value,parameters[i-1],parameters[i-2])==NO){	
+					;
+			}else{
+					parameters[i]=value;
+					i++;				
 			}
 		}
 	}
@@ -54,22 +51,11 @@ setDate(int parameters[6]){
 	
 }
 
+//Valida que el numbero que halla escrito el usuario este entre el menor y mayor numero, si es un mes lo valido despues	
 int 
-validate(char * aux, int * resp, int maxValue, int minValue){
-	int length = strlen(aux);
-	int value=0;
-	if(length>2 || length<0)
-		return NO;
-	for(int i=0;i<length;i++){
-		if(isNumber(aux[i])){
-				value+=(aux[i]-'0')*pow(10,i);
-		}else{
-			return NO;
-		}
-	}
+validate(int value int maxValue, int minValue){
 	if(value>maxValue || value<minValue)
 		return NO;
-	*resp=value;
 	return SI;
 }
 
