@@ -14,7 +14,7 @@ char INPUT_MIN[]="Ingrese nuevo Minuto: ";
 char INPUT_SEC[]="Ingrese nuevo Segundo: ";
 char * INPUT[]={INPUT_YEAR,INPUT_MONTH,INPUT_DAY,INPUT_HOUR,INPUT_MIN,INPUT_SEC};
 void showRTC();
-int validate(char * aux, int * resp, int maxValue, int minValue);
+int validate(int value,int maxValue, int minValue);
 int setDate(int parameters[6]);
 char * readKeyboard();
 int validateDay(int day, int month, int year);
@@ -52,8 +52,7 @@ setDate(int parameters[6]){
 }
 
 //Valida que el numbero que halla escrito el usuario este entre el menor y mayor numero, si es un mes lo valido despues	
-int 
-validate(int value int maxValue, int minValue){
+int validate(int value,int maxValue, int minValue){
 	if(value>maxValue || value<minValue)
 		return NO;
 	return SI;
@@ -78,7 +77,7 @@ validateDay(int day, int month, int year){
 char * readKeyboard(){
 	char c = 0,j = 0;
 	char aux[80];
-	while((c = keyboard_get_key()) != '\n'&& j<19){ //lee lo ultimo que se escribio en el teclado
+	while((c = clean_get_char()) != '\n'&& j<80){ //lee lo ultimo que se escribio en el teclado
 			aux[j] = c;
 			j++;
 	}

@@ -45,11 +45,14 @@ void init_commands(char index, char * name, char* description, void (*function)(
 void shell_command(){
 	char valid_command = 0;
 	char c = 0,j = 0;
-	while((c = keyboard_get_key()) != '\n' && j<19){
+	int size;
+	while((c = clean_get_char()) != '\n' && j<19){
 		comm[j] = c;
 		j++;
 	}
-	comm[j] = 0;
+	//size = _call_int80(6,comm,0);	
+
+	comm[size] = 0;
 	for(int i = 0;i<number_of_commands;i++){
 		if(strcmp(comm,commands[i].name) == 0){
 			commands[i].function();

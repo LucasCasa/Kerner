@@ -35,15 +35,15 @@ char sys_manager(int order,uint64_t arg1, uint64_t arg2){
 	return 0;
 }
 char read(char* buff, char size){
-	if(keyboard_is_empty())
-		return 0;
+	int i;
+	while(C_is_empty() ){}
 
 	if(size == 0)
 		size == 255;
 
 	char c;
-	for(int i= 0; i<size && (c = keyboard_get_key()) != '\n';i++){
+	for( i= 0; i<size && (c = clean_get_char()) != '\n';i++){
 		buff[i] = c;
 	}
-	return 1;
+	return i;
 }

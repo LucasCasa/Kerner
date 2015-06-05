@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdarg.h>
 
+int isNumber(char a);
 
 void * memset(void * destination, int32_t c, uint64_t length)
 {
@@ -78,13 +79,13 @@ int strcmp(const uint8_t *s1, const uint8_t *s2) {
 }
 int atoi(char * string){
 	int num=0;
-	while(*string!=0 && num>=0){		
+	while(*string != 0 && num>=0){		
 		num = num*10;
 		if(isNumber(*string))
-			num=num+(*str-'0');
+			num=num+(*string-'0');
 		else 
 			num=-1;
-		str++;
+		string++;
 	}
 	return num;
 }
@@ -97,7 +98,7 @@ int strlen(const char * str){
 }
 
 int isNumber(char a){
-	if(a=='0' || a=='1' || a=='2' || a=='3' || a=='4' || a=='5' || a=='6' || a=='7' || a=='8' || a=='9')
+	if(a <= '9' && a >= '0')
 		return 1;
 	else
 		return 0;

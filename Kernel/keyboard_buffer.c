@@ -7,8 +7,6 @@ uint8_t keyboard_buffer[KB_SIZE];
 uint8_t keyboard_actual=0;
 uint8_t keyboard_last=0;
 uint8_t size = 0;
-//Inicialmente los estados de shift y capslock estan en cero
-unsigned char lastKeyRead = 0;
 
 
 uint8_t keyboard_is_full(){
@@ -41,7 +39,10 @@ uint8_t keyboard_set_key(uint8_t c) {
 		}
 		if( keyboard_last == KB_SIZE )
 			keyboard_last = 0;
-	
+		
+		if( c == '\n'){
+			load_user_buffer();
+		}
 		return 1;
 
 	}
@@ -54,23 +55,17 @@ uint8_t keyboard_get_key(){
 
 	while(keyboard_is_empty()) {}
 
-	if( !keyboard_is_empty() ) {
-		c = keyboard_buffer[keyboard_actual++];
-		if( keyboard_actual == KB_SIZE )
-			keyboard_actual = 0;
+	c = keyboard_buffer[keyboard_actual++];
+	if( keyboard_actual == KB_SIZE )
+		keyboard_actual = 0;
 
-		lastKeyRead = c;
-		if(size > 0) 
-			size--;
-		return c;
-	}
-	return 0;
-}
-
-unsigned char keyboard_last_key_read(void) {
-	return lastKeyRead;
+	if(size > 0) 
+		size--;
+	return c;
 }
 
 void load_user_buffer(){
-
+	while(keyboard_actual != keyboard_last){
+		clean_set_char(keyboard_get_key());
+	}
 }
