@@ -7,7 +7,7 @@
 // syscall 6 ---> palabra que se escribio.
 
 char read(char* buff, char size);
-
+char read_char();
 char sys_manager(int order,uint64_t arg1, uint64_t arg2){
 	switch(order){
 		case 1:
@@ -31,8 +31,14 @@ char sys_manager(int order,uint64_t arg1, uint64_t arg2){
 		case 6:
 			return read( (uint8_t*) arg1,(uint8_t) arg2);
 			break;
+		case 7:
+			return read_char();
 	}
 	return 0;
+}
+char read_char(){
+	while(C_is_empty()){}
+		return clean_get_char();
 }
 char read(char* buff, char size){
 	int i;

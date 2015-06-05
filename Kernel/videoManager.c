@@ -119,10 +119,10 @@ void erase_screen(){
 }
 void print_standby(){
 	if(get_modifier() == 0x22){
-		_put_modifier(saved_modifier);
+		modifie(saved_modifier);
 	}else{
 		saved_modifier = get_modifier();
-		_put_modifier(0x22);
+		modifie(0x22);
 	}
 	
 }
@@ -149,6 +149,15 @@ show_screensaver(){
 			break;
 	}
 }
+
+void print_message(uint8_t* message, uint8_t mod){
+	int i = 0;
+	while(message[i] != 0){
+		sys_write(message[i],mod);
+		i++;
+	}
+}
+
 
 void maggie(){
 	print_message(" _______  _______  _______  _______ _________ _______ \n",0x02);

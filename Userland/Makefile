@@ -3,7 +3,7 @@ include Makefile.inc
 all: sampleCodeModule sampleDataModule
 
 sampleCodeModule:
-	cd SampleCodeModule; make
+	cd SampleCodeModule; make all
 
 sampleDataModule:
 	printf "This is sample data." >> SampleDataModule.bin && dd if=/dev/zero bs=1 count=1 >> SampleDataModule.bin

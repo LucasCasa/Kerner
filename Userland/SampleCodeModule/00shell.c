@@ -21,7 +21,7 @@ void changeTime();
 void shell_show_commands();
 void shell_exit();
 
-void shell_init(){
+int main(){
 	init_commands(0,"clear","borra la pantalla",&shell_erase_screen);
 	init_commands(1,"time","muestra el reloj" , &showRTC);
 	init_commands(2,"help" , "muestra comandos disponibles", &shell_show_commands);
@@ -32,7 +32,7 @@ void shell_init(){
 	shell_erase_screen();
 	print_message("Bienvenidos al mejor TP de la historia\n", 0x12);
 	while(1){
-		shell_command();
+		//shell_command();
 	}
 }
 
@@ -46,13 +46,14 @@ void shell_command(){
 	char valid_command = 0;
 	char c = 0,j = 0;
 	int size;
-	while((c = clean_get_char()) != '\n' && j<19){
+	/*while((c = clean_get_char()) != '\n' && j<19){
 		comm[j] = c;
 		j++;
-	}
-	//size = _call_int80(6,comm,0);	
+	}*/
+	size = _call_int80(6,comm,0);	
 
 	comm[size] = 0;
+	printf(comm,0x03);
 	for(int i = 0;i<number_of_commands;i++){
 		if(strcmp(comm,commands[i].name) == 0){
 			commands[i].function();
@@ -94,7 +95,7 @@ void showRTC(){
 	unsigned char tvalue4;
 	unsigned char tvalue5;
 	unsigned int tvalue6;
-	
+	/*
 	tvalue =  getSeconds();
 	tvalue2 = getMinutes();
 	tvalue3 = getHour();
@@ -113,6 +114,27 @@ void showRTC(){
 	print_number(BCDtoDecimal(tvalue2));
 	print_message(":",0x02);
 	print_number(BCDtoDecimal(tvalue));
-	print_message("\n");
+	print_message("\n");*/
 }
 
+void maggie(){
+	print_message(" _______  _______  _______  _______ _________ _______ \n",0x02);
+	print_message("(       )(  ___  )(  ____ \\(  ____ \\\\__   __/(  ____ \\ \n",0x02);
+	print_message("| () () || (   ) || (    \\/| (    \\/   ) (   | (    \\/ \n",0x02);
+	print_message("| || || || (___) || |      | |         | |   | (__  \n",0x02);
+	print_message("| |(_)| ||  ___  || | ____ | | ____    | |   |  __)   \n",0x02);
+	print_message("| |   | || (   ) || | \\_  )| | \\_  )   | |   | (   \n",0x02);
+	print_message("| )   ( || )   ( || (___) || (___) |___) (___| (____/\\ \n",0x02);
+	print_message("|/     \\||/     \\|(_______)(_______)\\_______/(_______/ \n",0x02);
+}
+
+void lucas(){
+	print_message(" _                 _______  _______  _______ \n",0x03);
+	print_message("( \\      |\\     /|(  ____ \\(  ___  )(  ____ \\ \n",0x03);
+	print_message("| (      | )   ( || (    \\/| (   ) || (    \\/ \n",0x03);
+	print_message("| |      | |   | || |      | (___) || (_____  \n",0x03);
+	print_message("| |      | |   | || |      |  ___  |(_____  ) \n",0x03);
+	print_message("| |      | |   | || |      | (   ) |      ) | \n",0x03);
+	print_message("| (____/\\| (___) || (____/\\| )   ( |/\\____) | \n",0x03);
+	print_message("(_______/(_______)(_______/|/     \\|\\_______) \n",0x03);
+}
