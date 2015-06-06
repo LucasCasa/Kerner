@@ -5,10 +5,11 @@ typedef struct {
   
 } Command;
 
-Command commands[7];
+Command commands[8];
 char comm[20];
-int number_of_commands = 7;
+int number_of_commands = 8;
 char aux;
+char name[20] = {0};
 
 
 void init_commands(char index, char * name, char* description, void (*function)());
@@ -20,6 +21,7 @@ void _shutdown_asm();
 void changeTime();
 void shell_show_commands();
 void shell_exit();
+void whoami();
 
 int main(){
 	init_commands(0,"clear","borra la pantalla",&shell_erase_screen);
@@ -27,8 +29,9 @@ int main(){
 	init_commands(2,"help" , "muestra comandos disponibles", &shell_show_commands);
 	init_commands(3,"change time", "cambia fecha y hora del sistema" , &changeTime);
 	init_commands(4,"shutdown","cerrar el proyecto", &shell_exit);
-	init_commands( 5 , "maggie" , "BEST COMMAND EVER" , &maggie);
-	init_commands( 6, "lucas" , "HOLA GENTE" , &lucas);
+	init_commands(5, "maggie" , "BEST COMMAND EVER" , &maggie);
+	init_commands(6, "lucas" , "HOLA GENTE" , &lucas);
+	init_commands(7, "whoami", "te dice quien sos", &whoami);
 	shell_erase_screen();
 	print_message("Bienvenidos al mejor TP de la historia\n", 0x12);
 	while(1){
@@ -134,4 +137,16 @@ void lucas(){
 	print_message("| |      | |   | || |      | (   ) |      ) | \n",0x03);
 	print_message("| (____/\\| (___) || (____/\\| )   ( |/\\____) | \n",0x03);
 	print_message("(_______/(_______)(_______/|/     \\|\\_______) \n",0x03);
+}
+
+void whoami(){
+	if(name[0] == 0){
+		char c = 0,i = 0;
+		print_message("No se... Quien sos?\n",0x03);
+		while((c = get_char()) != '\n' && i<19){
+			name[i++] = c;
+		}
+	}else{
+		printf(name);
+	}
 }
