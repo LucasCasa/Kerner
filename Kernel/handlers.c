@@ -37,7 +37,7 @@ void keyboard_handler(uint8_t scancode){
 		}else{
 			if(check_special_key(scancode)){
 				keyboard_set_key(scancode_to_char(scancode));
-				sys_write(scancode_to_char(scancode),0x02);
+				sys_write(scancode_to_char(scancode),0xFF);
 			}
 		}
 		sleep_time = 0;
