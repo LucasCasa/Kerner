@@ -7,15 +7,31 @@ static uint8_t * const video = (uint8_t*)0xB8000;
 static uint8_t * currentVideo = (uint8_t*)0xB8000;
 static uint8_t * saved_current_video;
 static char * command_line = 0xB8000;
+char str_modifier = 0x02;
+char num_modifier = 0x04;
+
 char* saved_shell[160*25];
 char saved_modifier;
-void sys_write(char c,char mod);
+void sys_write(char c,uint8_t mod);
 char sys_get_screen_char();
 void sys_delete_char();
 void modifie(char mod);
 char check_end_of_screen();
 
-
+void set_default_modifiers(char s, char n){
+	str_modifier = s;
+	num_modifier = n;
+	set_new_modifier();
+}
+void set_new_modifier(){
+	for(int i = 0; i<160*25;i++){
+		if(isNumber(video[i]) || i % 160 < 4){
+			video[++i] = num_modifier;
+		}else{
+			video[++i] = str_modifier;
+		}
+	}
+}
 char get_modifier(){
 	return *(currentVideo +1);
 }
@@ -38,9 +54,9 @@ char* get_command(){
 }
 void draw_new_line(){
 	*(currentVideo++) = '>';
-	*(currentVideo++) = 0x04;
+	*(currentVideo++) = num_modifier;
 	*(currentVideo++) = ':';
-	*(currentVideo++) = 0x04;
+	*(currentVideo++) = num_modifier;
 }
 void reset_current_video(){
 	currentVideo = video;
@@ -70,28 +86,30 @@ void new_line(){
 	set_command_line();
 	draw_new_line();
 }
-void sys_write(char c,char mod){
+void sys_write(char c,uint8_t mod){
 	switch(c){
-			case '\n':
-				new_line();			
-				/*if(check_end_of_screen()){
-					command -= 160;
+		case '\n':
+			new_line();			
+			set_command_line();
+			break;
+		case '\b':
+			sys_delete_char();
+		case 0:
+			break;
+		default:
+			*(currentVideo++) = c;
+			if(mod == 0xFF){
+				if(isNumber(c)){
+					*(currentVideo++) = num_modifier;
+				}else{
+					*(currentVideo++) = str_modifier;
 				}
-				shell_command();*/
-				set_command_line();
-				break;
-			case '\b':
-				sys_delete_char();
-			case 0:
-				break;
-			default:
-				*(currentVideo++) = c;
+			}else{
 				*(currentVideo++) = mod;
-				break;
-		}
-		check_end_of_screen();
-	
-	
+			}
+			break;
+	}
+	check_end_of_screen();	
 }
 
 char check_end_of_screen(){
@@ -114,7 +132,8 @@ void scroll(){
 
 void erase_screen(){
 	for(int j = 0; j<25*160;j++){
-		video[j] = 0;
+		video[j++] = 0;
+		video[j] = (num_modifier & 0xF0) + (num_modifier >> 4);
 	}
 }
 void print_standby(){

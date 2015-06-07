@@ -76,8 +76,8 @@ validateDay(int day, int month, int year){
 
 char * readKeyboard(){
 	char c = 0,j = 0;
-	char aux[80];
-	while((c = get_char()) != '\n'&& j<80){ //lee lo ultimo que se escribio en el teclado
+	char aux[3];
+	while((c = get_char()) != '\n'&& j<3){ //lee lo ultimo que se escribio en el teclado
 			aux[j] = c;
 			j++;
 	}

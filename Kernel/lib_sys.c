@@ -48,3 +48,10 @@ void * memcpy(void * destination, const void * source, uint64_t length)
 
 	return destination;
 }
+
+int isNumber(char a){
+	if(a <= '9' && a >= '0')
+		return 1;
+	else
+		return 0;
+}

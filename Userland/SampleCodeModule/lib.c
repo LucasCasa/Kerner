@@ -3,7 +3,19 @@
 
 int isNumber(char a);
 
+void malloc(){
+	
+}
+void * memset(void * destination, int32_t c, uint64_t length)
+{
+	uint8_t chr = (uint8_t)c;
+	uint8_t * dst = (uint8_t*)destination;
 
+	while(length--)
+		dst[length] = chr;
+
+	return destination;
+}
 
 void print_message(uint8_t* message, uint8_t mod){
 	int i = 0;

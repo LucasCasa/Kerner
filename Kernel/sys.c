@@ -37,6 +37,10 @@ char sys_manager(int order,uint64_t arg1, uint64_t arg2){
 			c = read_char();
 			return c;
 			break;
+		case 10:
+			set_default_modifiers((uint8_t) arg1, (uint8_t) arg2);
+			break;
+
 	}
 	return 0;
 }

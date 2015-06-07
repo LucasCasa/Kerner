@@ -1,3 +1,5 @@
+#include "stdint.h"
+
 typedef struct {
   char* name;
   char* description;
@@ -5,13 +7,23 @@ typedef struct {
   
 } Command;
 
-Command commands[8];
+Command commands[7];
 char comm[20];
-int number_of_commands = 8;
+int number_of_commands = 7;
 char aux;
 char name[20] = {0};
 
+extern char bss;
+extern char endOfBinary;
 
+const char* time_str = "muestra el reloj";
+const char* help_str = "muestra comandos disponibles";
+const char* change_time_str = "cambia fecha y hora del sistema";
+const char* whoami_str = "te dice quien sos";
+const char* keyboard_str = "muestra la distribucion de las teclas";
+const char* modi_str = "cambiar colores de la consola";
+const char* clear_str = "borra la pantalla";
+void * memset(void * destiny, int32_t c, uint64_t length);
 void init_commands(char index, char * name, char* description, void (*function)());
 void maggie();
 void lucas();
@@ -22,18 +34,21 @@ void changeTime();
 void shell_show_commands();
 void shell_exit();
 void whoami();
+void show_keyboard();
+void modifie_colors();
 
 int main(){
-	init_commands(0,"clear","borra la pantalla",&shell_erase_screen);
-	init_commands(1,"time","muestra el reloj" , &showRTC);
-	init_commands(2,"help" , "muestra comandos disponibles", &shell_show_commands);
-	init_commands(3,"change time", "cambia fecha y hora del sistema" , &changeTime);
-	init_commands(4,"shutdown","cerrar el proyecto", &shell_exit);
-	init_commands(5, "maggie" , "BEST COMMAND EVER" , &maggie);
-	init_commands(6, "lucas" , "HOLA GENTE" , &lucas);
-	init_commands(7, "whoami", "te dice quien sos", &whoami);
+	memset(&bss, 0, &endOfBinary - &bss);
+
 	shell_erase_screen();
 	print_message("Bienvenidos al mejor TP de la historia\n", 0x12);
+	init_commands(0,"clear", clear_str ,&shell_erase_screen);
+	init_commands(1,"time", time_str , &showRTC);
+	init_commands(2,"help" , help_str, &shell_show_commands);
+	init_commands(3,"change time", change_time_str , &changeTime);
+	init_commands(4, "whoami", whoami_str , &whoami);
+	init_commands(5, "keyboard" , keyboard_str, &show_keyboard);
+	init_commands(6, "modifiers" ,modi_str, &modifie_colors);
 	while(1){
 		shell_command();
 	}
@@ -61,7 +76,7 @@ void shell_command(){
 		}
 	}
 	if(valid_command == 0){
-		print_message("Comando Invalido\n",0x34);
+		print_message("Comando Invalido\n",0xFF);
 	}
 
 }
@@ -72,10 +87,10 @@ void shell_exit(){
 
 void shell_show_commands(){
 	for(int i=0 ;i<number_of_commands;i++){
-		print_message(commands[i].name, 0x05);
-		print_message(" - ", 0x05);
-		print_message(commands[i].description, 0x05);
-		print_message("\n",0x05);
+		print_message(commands[i].name, 0xFF);
+		print_message(" - ", 0xFF);
+		print_message(commands[i].description, 0xFF);
+		print_message("\n",0xFF);
 	}
 }
 
@@ -117,32 +132,10 @@ void showRTC(){
 	print_message("\n");*/
 }
 
-void maggie(){
-	print_message(" _______  _______  _______  _______ _________ _______ \n",0x02);
-	print_message("(       )(  ___  )(  ____ \\(  ____ \\\\__   __/(  ____ \\ \n",0x02);
-	print_message("| () () || (   ) || (    \\/| (    \\/   ) (   | (    \\/ \n",0x02);
-	print_message("| || || || (___) || |      | |         | |   | (__  \n",0x02);
-	print_message("| |(_)| ||  ___  || | ____ | | ____    | |   |  __)   \n",0x02);
-	print_message("| |   | || (   ) || | \\_  )| | \\_  )   | |   | (   \n",0x02);
-	print_message("| )   ( || )   ( || (___) || (___) |___) (___| (____/\\ \n",0x02);
-	print_message("|/     \\||/     \\|(_______)(_______)\\_______/(_______/ \n",0x02);
-}
-
-void lucas(){
-	print_message(" _                 _______  _______  _______ \n",0x03);
-	print_message("( \\      |\\     /|(  ____ \\(  ___  )(  ____ \\ \n",0x03);
-	print_message("| (      | )   ( || (    \\/| (   ) || (    \\/ \n",0x03);
-	print_message("| |      | |   | || |      | (___) || (_____  \n",0x03);
-	print_message("| |      | |   | || |      |  ___  |(_____  ) \n",0x03);
-	print_message("| |      | |   | || |      | (   ) |      ) | \n",0x03);
-	print_message("| (____/\\| (___) || (____/\\| )   ( |/\\____) | \n",0x03);
-	print_message("(_______/(_______)(_______/|/     \\|\\_______) \n",0x03);
-}
-
 void whoami(){
 	if(name[0] == 0){
 		char c = 0,i = 0;
-		print_message("No se... Quien sos?\n",0x03);
+		print_message("No se... Quien sos?\n",0x0FF);
 		while((c = get_char()) != '\n' && i<19){
 			name[i++] = c;
 		}
@@ -150,3 +143,4 @@ void whoami(){
 		printf(name);
 	}
 }
+
