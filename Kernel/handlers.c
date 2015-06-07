@@ -7,14 +7,15 @@ static int time = 0;
 static char light = 0;
 static char aux = 1;
 uint16_t sleep_time = 0;
+uint32_t screensaver_time = 5 * 1000 / 55;
 
 void timer_handler(){
 	time++;
 	sleep_time++;
-	if(sleep_time >= 100){
-		if(sleep_time < 110){
+	if(sleep_time >= screensaver_time){
+		if(sleep_time < screensaver_time + 10){
 			save_screen();
-			sleep_time = 110;
+			sleep_time = screensaver_time + 10;
 		}
 		if((sleep_time % 10) == 0){
 			show_screensaver();
@@ -30,7 +31,7 @@ void timer_handler(){
 void keyboard_handler(uint8_t scancode){
 	if(scancode != 250){
 		
-		if(sleep_time >= 100){
+		if(sleep_time >= screensaver_time){
 			restore_screen();
 		}else{
 			if(check_special_key(scancode)){

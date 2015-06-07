@@ -111,3 +111,8 @@ char get_char(){
 	}while(c == 0);
 	return c;
 }
+void flush_buffer(){
+	char c;
+	while (c != '\n'){}
+	return;
+}

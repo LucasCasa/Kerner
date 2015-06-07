@@ -1,9 +1,9 @@
 #include "stdint.h"
 #include "00shell.h"
 
-Command commands[7];
+Command commands[8];
 char comm[20];
-int number_of_commands = 7;
+int number_of_commands = 8;
 char aux;
 char name[20] = {0};
 
@@ -26,6 +26,7 @@ int main(){
 	init_commands(4, "whoami", whoami_str , &whoami);
 	init_commands(5, "keyboard" , keyboard_str, &show_keyboard);
 	init_commands(6, "colors" ,modi_str, &modifie_colors);
+	init_commands(7, "screen time", saver_str, &set_screensaver_time);
 	while(1){
 		shell_command();
 	}
@@ -78,14 +79,14 @@ void showRTC(){
 	unsigned char dia = _call_int80(8,3);
 	unsigned char mes = _call_int80(8,4);
 	unsigned char anio = _call_int80(8,5);
-	printf("Day: %d Month: %d Year: %d\n", 0x0f, dia,mes,anio);
-	printf("Time: %d:%d:%d \n", 0x0f,hora,min,seg);
+	printf("Day: %d Month: %d Year: %d\n", 0xFF, dia,mes,anio);
+	printf("Time: %d:%d:%d \n", 0xFF,hora,min,seg);
 }
 
 void whoami(){
 	if(name[0] == 0){
 		char c = 0,i = 0;
-		print_message("No se... Quien sos?\n",0x0FF);
+		print_message("No se... Quien sos?\n",0xFF);
 		while((c = get_char()) != '\n' && i<19){
 			name[i++] = c;
 		}

@@ -22,6 +22,7 @@ void shell_exit();
 void whoami();
 void show_keyboard();
 void modifie_colors();
+set_screensaver_time(uint32_t time);
 
 const char* time_str = "Muestra el reloj";
 const char* help_str = "Muestra comandos disponibles";
@@ -30,5 +31,6 @@ const char* whoami_str = "Dice quien eres";
 const char* keyboard_str = "Muestra la distribucion de las teclas";
 const char* modi_str = "Cambiar colores de la consola";
 const char* clear_str = "Borra la pantalla";
+const char* saver_str = "cambia el tiempo hasta que aparezca el protector de pantalla";
 
 #endif
