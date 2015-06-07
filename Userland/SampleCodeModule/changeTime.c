@@ -22,9 +22,14 @@ void changeTime(){
 			}
 		}
 	}
-	setDate(parameters);
+	callSetters(parameters);
 	showRTC();
+}
 
+void callSetters(unsigned int parameters[6]){
+	for(int i=0; i<6; i++){
+		_call_int80(9,i,parameters[i]);
+	}
 }
 
 //Valida que el numbero que halla escrito el usuario este entre el menor y mayor numero, si es un mes lo valido despues	

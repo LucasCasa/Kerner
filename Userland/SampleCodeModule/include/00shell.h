@@ -23,12 +23,12 @@ void whoami();
 void show_keyboard();
 void modifie_colors();
 
-const char* time_str = "muestra el reloj";
-const char* help_str = "muestra comandos disponibles";
-const char* change_time_str = "cambia fecha y hora del sistema";
-const char* whoami_str = "te dice quien sos";
-const char* keyboard_str = "muestra la distribucion de las teclas";
-const char* modi_str = "cambiar colores de la consola";
-const char* clear_str = "borra la pantalla";
+const char* time_str = "Muestra el reloj";
+const char* help_str = "Muestra comandos disponibles";
+const char* change_time_str = "Cambia la fecha y hora del sistema";
+const char* whoami_str = "Dice quien eres";
+const char* keyboard_str = "Muestra la distribucion de las teclas";
+const char* modi_str = "Cambiar colores de la consola";
+const char* clear_str = "Borra la pantalla";
 
 #endif

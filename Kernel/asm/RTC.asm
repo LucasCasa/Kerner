@@ -1,72 +1,34 @@
+GLOBAL _set_value
+GLOBAL _get_value
+    
+_get_value:	    ; lee del RTC
+        cli
+        push rbp
+        mov rbp,rsp
 
-GLOBAL getSeconds
-GLOBAL getMonth
-GLOBAL getHour
-GLOBAL getDay
-GLOBAL getMinutes
-GLOBAL getYear
-GLOBAL setHour
+        xor eax,eax
+        mov rax,rdi
 
+        out 0x70,al
+        in  al,71h
+        mov rsp,rbp
+        pop rbp
+        sti
+	and rax, 0xFF
+        ret
 
-getSeconds:
-		cli
-		push rbp
-		mov rbp, rsp
-		xor eax, eax
-		mov al, 0x00
-		jmp calc
+    
+_set_value:		;escribe en el RTC
+        cli             ;clear interrupts
+        push rbp
+        mov rbp,rsp
+        mov rax,rdi
+        out 0x70,al
+        mov rax,rsi
+        out 0x71,al     
+	
+	mov rsp,rbp
+	pop rbp
+        sti
+        ret 
 
-getMinutes:
-		push rbp
-		mov rbp, rsp
-		xor eax, eax
-		mov al, 2
-		jmp calc
-
-getHour:
-		push rbp
-		mov rbp, rsp
-		xor eax, eax
-		mov al, 4
-		jmp calc
-
-getDay:
-		push rbp
-		mov rbp, rsp
-		xor eax, eax
-		mov al, 7
-		jmp calc
-
-getMonth:
-		push rbp
-		mov rbp, rsp
-		xor eax, eax
-		mov al, 8
-		jmp calc
-
-getYear:
-		push rbp
-		mov rbp, rsp
-		mov al, 9
-		jmp calc
-
-calc:
-		out 70h, al
-		xor al,al
-		in	al,71h
-		mov rsp, rbp 
-       	pop rbp 
-       	sti
-		ret
-
-setHour:
-		cli
-		push rbp
-		mov rbp, rsp
-		mov al,4
-		out 70h,al
-		mov rax,rdi
-		out 71h,al
-		sti
-		leave
-		ret

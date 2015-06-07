@@ -72,13 +72,12 @@ void shell_erase_screen(){
 }
 
 void showRTC(){
-	unsigned char anio,mes,dia,hora,min,seg;
-	anio=getYear();
-	mes=getMonth();
-	dia=getDay();
-	hora=getHour();
-	min=getMinute();
-	seg=getSecond();
+	unsigned char seg = _call_int80(8,0);
+	unsigned char min = _call_int80(8,1);
+	unsigned char hora = _call_int80(8,2);
+	unsigned char dia = _call_int80(8,3);
+	unsigned char mes = _call_int80(8,4);
+	unsigned char anio = _call_int80(8,5);
 	printf("Day: %d Month: %d Year: %d\n",dia,mes,anio);
 	printf("Time: %d:%d:%d \n",hora,min,seg);
 }
