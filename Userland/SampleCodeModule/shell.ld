@@ -4,15 +4,18 @@ SECTIONS
 {
 	.text 0x400000 :
 	{
+		text = .;
 		*(.text*)
-		. = ALIGN(0x1000);
+		. = ALIGN(0x2000);
+		rodata = .;
 		*(.rodata*)
 	}
-	.data ALIGN(0x1000) :
-	{
+	.data ALIGN(0x2000) :
+	{	
+		data = .;
 		*(.data*)
 	}
-	.bss ALIGN(0x1000) :
+	.bss ALIGN(0x2000) :
 	{
 		bss = .;
 		*(.bss*)
