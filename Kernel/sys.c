@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "sys.h"
 //syscall 1 ---> escribo en pantalla
 //syscall 2 ---> borro caracter
 //syscall 3 ---> devuelvo el ultimo caracter

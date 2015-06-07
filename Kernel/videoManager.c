@@ -71,7 +71,6 @@ void restore_screen(){
 		video[i] = saved_shell[i];
 	}
 	currentVideo = saved_current_video;
-	set_command_line();
 }
 void new_line(){
 	*currentVideo = 0;
@@ -85,7 +84,6 @@ void sys_write(char c,uint8_t mod){
 	switch(c){
 		case '\n':
 			new_line();			
-			set_command_line();
 			break;
 		case '\b':
 			sys_delete_char();

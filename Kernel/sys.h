@@ -2,6 +2,7 @@
 #define SYS_H_
 
 #include "stdint.h"
+
 #define WRITE 1
 #define DEL_CHAR 2
 #define SCR_CHAR 3
@@ -16,3 +17,5 @@
 char read(char* buff, char size);
 char read_char();
 char sys_manager(int order, uint64_t arg1, uint64_t arg2);
+
+#endif
