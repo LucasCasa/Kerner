@@ -17,8 +17,6 @@ int strlen(const char * str);
 int isNumber(char a);
 int pow(int x, unsigned int y);
 void putChar(uint8_t c,uint8_t mod);
-uint8_t BCDtoDecimal(uint8_t num);
-uint8_t DecimaltoBCD(uint8_t n);
 void printf(const char * string, ...);
 char get_char();
 

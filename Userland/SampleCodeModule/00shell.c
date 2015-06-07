@@ -78,8 +78,8 @@ void showRTC(){
 	unsigned char dia = _call_int80(8,3);
 	unsigned char mes = _call_int80(8,4);
 	unsigned char anio = _call_int80(8,5);
-	printf("Day: %d Month: %d Year: %d\n",dia,mes,anio);
-	printf("Time: %d:%d:%d \n",hora,min,seg);
+	printf("Day: %d Month: %d Year: %d\n", 0x0f, dia,mes,anio);
+	printf("Time: %d:%d:%d \n", 0x0f,hora,min,seg);
 }
 
 void whoami(){

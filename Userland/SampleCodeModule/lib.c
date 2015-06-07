@@ -77,27 +77,10 @@ void putChar(uint8_t c,uint8_t mod){
 	_put_char(c,mod);
 }
 
-uint8_t BCDtoDecimal(uint8_t num){
-	int aux = 0;
-	aux = (num >> 4) * 10;
-	aux += (num & 15);
-	return aux;
-}
-uint8_t DecimaltoBCD(uint8_t n){
-	int result = 0;
-	while(n>10){
-		result++;
-		n -= 10;
-	}
-	result = (result << 4);
-	result += n;
-	return result;
-}
-
-void printf(const char * string, ...){
+void printf(const char * string, int mod, ...){
 	char c;
 	va_list listpointer;
-	va_start(listpointer, string);
+	va_start(listpointer, mod);
 	for(int i=0; string[i] != '\0'; i++){
 		c = string[i];
 		/*if(c=='\n'){
@@ -108,15 +91,15 @@ void printf(const char * string, ...){
 				case 'd':	print_number(va_arg(listpointer,int));
 							i++;
 							break;
-				case 's':	print_message(va_arg(listpointer,char *), 15);
+				case 's':	print_message(va_arg(listpointer,char *), mod);
 							i++;
 							break;
-				default: 	_put_char(string[i], 15);
+				default: 	_put_char(string[i], mod);
 							break;
 			}
 		}
 		else{
-			_put_char(string[i], 15); // 15 para fondo negro letras blancas
+			_put_char(string[i], mod); // 15 para fondo negro letras blancas
 		}
 	}
 	va_end(listpointer);
