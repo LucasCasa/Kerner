@@ -1,11 +1,5 @@
 #include "stdint.h"
-
-typedef struct {
-  char* name;
-  char* description;
-  void(* function)();
-  
-} Command;
+#include "00shell.h"
 
 Command commands[7];
 char comm[20];
@@ -19,27 +13,6 @@ extern uint8_t data;
 extern uint8_t text;
 extern uint8_t rodata;
 
-const char* time_str = "muestra el reloj";
-const char* help_str = "muestra comandos disponibles";
-const char* change_time_str = "cambia fecha y hora del sistema";
-const char* whoami_str = "te dice quien sos";
-const char* keyboard_str = "muestra la distribucion de las teclas";
-const char* modi_str = "cambiar colores de la consola";
-const char* clear_str = "borra la pantalla";
-
-void * memset(void * destiny, int32_t c, uint64_t length);
-void init_commands(char index, char * name, char* description, void (*function)());
-void maggie();
-void lucas();
-void showRTC();
-void shell_erase_screen();
-void _shutdown_asm();
-void changeTime();
-void shell_show_commands();
-void shell_exit();
-void whoami();
-void show_keyboard();
-void modifie_colors();
 
 int main(){
 	memset(&bss, 0, &endOfBinary - &bss);
@@ -52,7 +25,7 @@ int main(){
 	init_commands(3,"change time", change_time_str , &changeTime);
 	init_commands(4, "whoami", whoami_str , &whoami);
 	init_commands(5, "keyboard" , keyboard_str, &show_keyboard);
-	init_commands(6, "modifiers" ,modi_str, &modifie_colors);
+	init_commands(6, "colors" ,modi_str, &modifie_colors);
 	while(1){
 		shell_command();
 	}
@@ -85,10 +58,6 @@ void shell_command(){
 
 }
 
-void shell_exit(){
-    
-}
-
 void shell_show_commands(){
 	for(int i=0 ;i<number_of_commands;i++){
 		print_message(commands[i].name, 0xFF);
@@ -100,11 +69,6 @@ void shell_show_commands(){
 
 void shell_erase_screen(){
 	_call_int80(5);
-}
-
-
-void shell_set_last_modifier(){
-	_put_modifier(aux);
 }
 
 void showRTC(){

@@ -1,3 +1,4 @@
+
 void modifie_colors(){
 	print_message("Selecciona color:\n",0xFF);
 	print_message("1- Fondo Negro, Letras Verdes,  Numeros Rojos (default)\n",0xFF);

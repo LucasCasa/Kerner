@@ -1,8 +1,6 @@
 #include <stdint.h>
 #include "include/handlers.h"
 
-extern void shell_show_screensaver();
-extern void shell_print_standby();
 
 static int i = 0;
 static int time = 0;

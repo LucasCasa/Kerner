@@ -49,9 +49,6 @@ void sys_delete_char(){
 		*(currentVideo +1) = 0x00;
 	}
 }
-char* get_command(){
-	return command_line;
-}
 void draw_new_line(){
 	*(currentVideo++) = '>';
 	*(currentVideo++) = num_modifier;
@@ -61,7 +58,6 @@ void draw_new_line(){
 void reset_current_video(){
 	currentVideo = video;
 	draw_new_line();
-	set_command_line();
 }
 void save_screen(){
 	for(int i = 0; i<160*25;i++){
@@ -83,7 +79,6 @@ void new_line(){
 	int aux;
 	aux = currentVideo - 0xB8000;
 	currentVideo = 0xB8000 + (aux + 160) - (aux % 160);
-	set_command_line();
 	draw_new_line();
 }
 void sys_write(char c,uint8_t mod){
@@ -116,7 +111,6 @@ char check_end_of_screen(){
 	if(currentVideo >= 0xB8000 + 160*25){
 		scroll();
 		currentVideo = 0xB8000 + 160*24;
-		set_command_line();
 		draw_new_line();
 		return 1;
 	}
@@ -127,6 +121,10 @@ void scroll(){
 	for(int i = 160;i<160*25;i++,j++){
 		video[j] = video[i];
 		video[i] = 0;
+	}
+	while( j < 160*25){
+		video[++j] = str_modifier;
+		j++;
 	}
 }
 
@@ -146,9 +144,6 @@ void print_standby(){
 	
 }
 
-void set_command_line(){
-	command_line = (int)currentVideo - ((int)(currentVideo - video) % 160);
-}
 int ssaver = 0;
 show_screensaver(){
 	erase_screen();

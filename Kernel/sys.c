@@ -6,38 +6,35 @@
 //syscall 5 ---> clear screen
 // syscall 6 ---> palabra que se escribio.
 
-char read(char* buff, char size);
-char read_char();
-
 char sys_manager(int order,uint64_t arg1, uint64_t arg2){
 	char c;
 	switch(order){
-		case 1:
+		case WRITE:
 			sys_write((char) arg1,(char) arg2);
 			break;
 
-		case 2:
+		case DEL_CHAR:
 			sys_delete_char();
 			break;
 
-		case 3:
+		case SCR_CHAR:
 			return sys_get_screen_char();
 			break;
-		case 4:
+		case GET_MOD:
 			modifie((char)arg1);
 			break;
-		case 5:
+		case ERASE_SCR:
 			erase_screen();
 			reset_current_video();
 			break;
-		case 6:
+		case GET_STR:
 			return read( (uint8_t*) arg1,(uint8_t) arg2);
 			break;
-		case 7:
+		case GET_CHAR:
 			c = read_char();
 			return c;
 			break;
-		case 10:
+		case COLORS:
 			set_default_modifiers((uint8_t) arg1, (uint8_t) arg2);
 			break;
 
