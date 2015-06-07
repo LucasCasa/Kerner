@@ -1,11 +1,9 @@
 #include "changeTime.h"
 #include "lib.h"
 
-#define SI 1
-#define NO 0
 
-char MAX_VALUES[]={99,12,31,23,59,59};
-char MIN_VALUES[]={0,1,1,0,0,0};
+int MAX_VALUES[]={9999,12,31,23,59,59};
+int MIN_VALUES[]={0,1,1,0,0,0};
 char INPUT_YEAR[]="Ingrese nuevo Anio: ";
 char INPUT_MONTH[]="Ingrese nuevo Mes: ";
 char INPUT_DAY[]="Ingrese nuevo Dia: ";
@@ -22,7 +20,7 @@ int validateDay(int day, int month, int year);
 
 
 void changeTime(){
-	int parameters[6];
+	unsigned int parameters[6];
 	int size = 6,i=0;
 	//int year,month,day,hour,min,sec;
 	showRTC(); //Imprime el tiempo para que lo vea antes de preguntarle por cambiar
@@ -46,11 +44,6 @@ void changeTime(){
 
 }
 
-int 
-setDate(int parameters[6]){
-	
-}
-
 //Valida que el numbero que halla escrito el usuario este entre el menor y mayor numero, si es un mes lo valido despues	
 int validate(int value,int maxValue, int minValue){
 	if(value>maxValue || value<minValue)
@@ -58,8 +51,7 @@ int validate(int value,int maxValue, int minValue){
 	return SI;
 }
 
-int
-validateDay(int day, int month, int year){
+int validateDay(int day, int month, int year){
 	if(month == 2){
 		if(day == 29){
 			if(year%4==0)
@@ -76,8 +68,8 @@ validateDay(int day, int month, int year){
 
 char * readKeyboard(){
 	char c = 0,j = 0;
-	char aux[3];
-	while((c = get_char()) != '\n'&& j<3){ //lee lo ultimo que se escribio en el teclado
+	char aux[80];
+	while((c = get_char()) != '\n'&& j<80){ //lee lo ultimo que se escribio en el teclado
 			aux[j] = c;
 			j++;
 	}

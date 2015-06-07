@@ -104,32 +104,15 @@ void shell_set_last_modifier(){
 }
 
 void showRTC(){
-	unsigned char tvalue;
-	unsigned char tvalue2;
-	unsigned char tvalue3;
-	unsigned char tvalue4;
-	unsigned char tvalue5;
-	unsigned int tvalue6;
-	/*
-	tvalue =  getSeconds();
-	tvalue2 = getMinutes();
-	tvalue3 = getHour();
-	tvalue4 = getDay();
-	tvalue5 = getMonth();
-	tvalue6 = getYear();
-	print_message("Day: ",0x02);
-	print_number(BCDtoDecimal(tvalue4));
-	print_message(" Month: ",0x02);
-	print_number(BCDtoDecimal(tvalue5));
-	print_message(" Year: ",0x02); //COMO implemento la ñ??
-	print_number(BCDtoDecimal(tvalue6));
-	print_message(" Time: ",0x02);
-	print_number(BCDtoDecimal(tvalue3));
-	print_message(":",0x02);
-	print_number(BCDtoDecimal(tvalue2));
-	print_message(":",0x02);
-	print_number(BCDtoDecimal(tvalue));
-	print_message("\n");*/
+	unsigned char anio,mes,dia,hora,min,seg;
+	anio=getYear();
+	mes=getMonth();
+	dia=getDay();
+	hora=getHour();
+	min=getMinute();
+	seg=getSecond();
+	printf("Day: %d Month: %d Year: %d\n",dia,mes,anio);
+	printf("Time: %d:%d:%d \n",hora,min,seg);
 }
 
 void whoami(){
