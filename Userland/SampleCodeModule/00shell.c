@@ -54,7 +54,7 @@ void shell_command(){
 		}
 	}
 	if(valid_command == 0){
-		print_message("Comando Invalido\n",0xFF);
+		printf("Comando %s Invalido\n",0xFF, comm);
 	}
 
 }
@@ -91,7 +91,7 @@ void whoami(){
 			name[i++] = c;
 		}
 	}else{
-		printf(name);
+		printf("%s \n",0xFF,name);
 	}
 }
 

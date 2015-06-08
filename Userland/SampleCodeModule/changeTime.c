@@ -10,7 +10,7 @@ void changeTime(){
 	while(i<size){
 		char * aux;
 		int value;
-		print_message(INPUT[i],0x0F);
+		print_message(INPUT[i],0xFF);
 		aux=readKeyboard();
 		value=atoi(aux);
 		if(validate(value,MAX_VALUES[i],MIN_VALUES[i])){

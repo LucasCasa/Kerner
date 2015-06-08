@@ -1,22 +1,6 @@
-
-
-
 #include "stdint.h"
+#include "video_manager.h"
 
-static uint8_t * const video = (uint8_t*)0xB8000;
-static uint8_t * currentVideo = (uint8_t*)0xB8000;
-static uint8_t * saved_current_video;
-static char * command_line = 0xB8000;
-char str_modifier = 0x02;
-char num_modifier = 0x04;
-
-char* saved_shell[160*25];
-char saved_modifier;
-void sys_write(char c,uint8_t mod);
-char sys_get_screen_char();
-void sys_delete_char();
-void modifie(char mod);
-char check_end_of_screen();
 
 void set_default_modifiers(char s, char n){
 	str_modifier = s;
@@ -43,10 +27,10 @@ char sys_get_screen_char(){
 }
 void sys_delete_char(){
 	if((int)currentVideo - (int)command_line > 4){
-		*(currentVideo + 1) = 0x00;
+		*(currentVideo + 1) = str_modifier;
 		currentVideo -=2;
 		*(currentVideo) = 0;
-		*(currentVideo +1) = 0x00;
+		*(currentVideo +1) = str_modifier;
 	}
 }
 void draw_new_line(){
@@ -58,6 +42,7 @@ void draw_new_line(){
 void reset_current_video(){
 	currentVideo = video;
 	draw_new_line();
+	set_command_line();
 }
 void save_screen(){
 	for(int i = 0; i<160*25;i++){
@@ -71,6 +56,7 @@ void restore_screen(){
 		video[i] = saved_shell[i];
 	}
 	currentVideo = saved_current_video;
+	set_command_line();
 }
 void new_line(){
 	*currentVideo = 0;
@@ -78,12 +64,15 @@ void new_line(){
 	int aux;
 	aux = currentVideo - 0xB8000;
 	currentVideo = 0xB8000 + (aux + 160) - (aux % 160);
+	set_command_line();
 	draw_new_line();
 }
 void sys_write(char c,uint8_t mod){
 	switch(c){
 		case '\n':
-			new_line();			
+			new_line();
+			set_command_line();
+
 			break;
 		case '\b':
 			sys_delete_char();
@@ -110,6 +99,7 @@ char check_end_of_screen(){
 		scroll();
 		currentVideo = 0xB8000 + 160*24;
 		draw_new_line();
+		set_command_line();
 		return 1;
 	}
 	return 0;
@@ -141,9 +131,12 @@ void print_standby(){
 	}
 	
 }
+void set_command_line(){
+	command_line = (int)currentVideo - ((int)(currentVideo - video) % 160);
+}
 
 int ssaver = 0;
-show_screensaver(){
+void show_screensaver(){
 	erase_screen();
 	reset_current_video();
 	switch(ssaver){
@@ -159,14 +152,6 @@ show_screensaver(){
 			kuyum();
 			ssaver = 0;
 			break;
-	}
-}
-
-void print_message(uint8_t* message, uint8_t mod){
-	int i = 0;
-	while(message[i] != 0){
-		sys_write(message[i],mod);
-		i++;
 	}
 }
 

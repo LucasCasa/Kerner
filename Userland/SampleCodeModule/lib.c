@@ -24,10 +24,10 @@ void print_message(uint8_t* message, uint8_t mod){
 
 void print_number(uint32_t n){
 	if(n < 10){
-		_put_char(n + '0',0x04);
+		_put_char(n + '0',0xFF);
 	}else{
 		print_number(n / 10);
-		_put_char((n % 10) + '0',0x04);
+		_put_char((n % 10) + '0',0xFF);
 	}
 }
 int strcmp(const uint8_t *s1, const uint8_t *s2) {

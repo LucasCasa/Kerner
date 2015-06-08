@@ -17,13 +17,11 @@ void modifie_colors(){
 		//print_message(c);
 		if(isNumber(c)){
 			res = (c - '0') ;
-			print_number(c);
 		}else{
 			res = 0;
 		}
 	}
-	}while(i > 1 || res == 0);
-	print_number(res);
+	}while(i > 1 || res == 0 || res > 5);
 
 	switch(res){
 		case 1:

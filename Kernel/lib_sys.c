@@ -55,3 +55,11 @@ int isNumber(char a){
 	else
 		return 0;
 }
+
+void print_message(uint8_t* message, uint8_t mod){
+	int i = 0;
+	while(message[i] != 0){
+		sys_write(message[i],mod);
+		i++;
+	}
+}
