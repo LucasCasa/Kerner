@@ -54,7 +54,7 @@ void shell_command(){
 		}
 	}
 	if(valid_command == 0){
-		printf("Comando %s Invalido\n",0xFF, comm);
+		printf("Comando \"%s\" Invalido\n",0xFF, comm);
 	}
 
 }
