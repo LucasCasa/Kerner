@@ -31,13 +31,19 @@ unsigned char RTCparameters(char arg){
 	}
 	return 0;
 }
-void set_date(char arg, unsigned char value){
+void set_date(char arg, uint32_t value){
 	switch(arg){
-		case 0: _set_value(ANIO, DecimaltoBCD(value % 100));
+		case 0: _set_value(ANIO, DecimaltoBCD((value % 100)));
+		break;
 		case 1: _set_value(MES, DecimaltoBCD(value));
+		break;
 		case 2: _set_value(DIA, DecimaltoBCD(value));
+		break;
 		case 3: _set_value(HORA, DecimaltoBCD(value));
+		break;
 		case 4: _set_value(MIN, DecimaltoBCD(value));
+		break;
 		case 5: _set_value(SEC, DecimaltoBCD(value));
+		break;
 	}
 }

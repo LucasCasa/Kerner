@@ -39,7 +39,7 @@ char sys_manager(int order,uint64_t arg1, uint64_t arg2){
 			return RTCparameters((char)arg1);
 			break;
 		case RTC_WRITE:
-			set_date((char)arg1,(char)arg2); // 1st arg type to change (Year, Month, Hour, etc.) 2nd arg the amount
+			set_date((char)arg1,(uint32_t)arg2); // 1st arg type to change (Year, Month, Hour, etc.) 2nd arg the amount
 			break;
 		case COLORS:
 			set_default_modifiers((uint8_t) arg1, (uint8_t) arg2);
