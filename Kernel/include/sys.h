@@ -5,6 +5,7 @@
 #include "sys_lib.h"
 #include "clean_buffer.h"
 #include "rtc.h"
+#include "screensaver.h"
 
 #define WRITE 1
 #define GET_CHAR 2

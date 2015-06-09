@@ -1,5 +1,4 @@
 #include "screensaver.h"
-#include "sys.h"
 
 int ssaver = 0;
 void show_screensaver(){

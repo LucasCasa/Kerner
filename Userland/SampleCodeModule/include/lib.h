@@ -30,4 +30,6 @@ void putChar(uint8_t c,uint8_t mod);
 void printf(const char * string, uint8_t mod, ...);
 char get_char();
 
+void flush_buffer();
+
 #endif

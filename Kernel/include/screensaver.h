@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include "video_manager.h"
 #include "sys_lib.h"
+#include "sys.h"
 
 void kuyum();
 void lucas();

@@ -1,4 +1,3 @@
-#include "keyboard_buffer.h"
 #include "clean_buffer.h"
 
  char Cbuffer[KB_SIZE + 1];
