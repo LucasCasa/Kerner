@@ -1,4 +1,3 @@
-#include "video_manager.h"
 #include "screensaver.h"
 
 int ssaver = 0;

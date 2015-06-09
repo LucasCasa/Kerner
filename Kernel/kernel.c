@@ -40,7 +40,7 @@ void * initializeKernelBinary()
 	ncNewline();
 
 	ncPrint("CPU Vendor:");
-	ncPrint(cpuVendor(buffer));
+	ncPrint((char *)cpuVendor(buffer));
 	ncNewline();
 
 	ncPrint("[Loading modules]");
