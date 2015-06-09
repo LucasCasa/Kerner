@@ -8,9 +8,8 @@
 char C_is_empty();
 
 void clean_set_char(char c){
-
-	Cbuffer[last_pos++] = c;
-	Csize++;
+		Cbuffer[last_pos++] = c;
+		Csize++;
 	if( last_pos == KB_SIZE )
 		last_pos = 0;
 }

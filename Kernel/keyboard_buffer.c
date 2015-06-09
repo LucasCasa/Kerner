@@ -28,9 +28,11 @@ uint8_t keyboard_size(){
 uint8_t keyboard_set_key(uint8_t c) {
 	
 	if( !keyboard_is_full() ) {
-		if(c == '\b' && size > 0){
-			keyboard_last--;
-			size--;
+		if(c == '\b'){
+			if(size > 0){
+				keyboard_last--;
+				size--;
+			}
 		}else if(c == 0){
 			//NOP
 		}else{

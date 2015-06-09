@@ -15,12 +15,12 @@ int validateDay(int day, int month, int year);
 
 int MAX_VALUES[]={9999,12,31,23,59,59};
 int MIN_VALUES[]={0,1,1,0,0,0};
-char INPUT_YEAR[]="Ingrese nuevo Anio:\n";
-char INPUT_MONTH[]="Ingrese nuevo Mes:\n";
-char INPUT_DAY[]="Ingrese nuevo Dia:\n";
-char INPUT_HOUR[]="Ingrese nueva Hora:\n";
-char INPUT_MIN[]="Ingrese nuevo Minuto:\n";
-char INPUT_SEC[]="Ingrese nuevo Segundo:\n";
+char INPUT_YEAR[]="Enter new year:";
+char INPUT_MONTH[]="Enter new month:";
+char INPUT_DAY[]="Enter new day:";
+char INPUT_HOUR[]="Enter new hour:";
+char INPUT_MIN[]="Enter new minute:";
+char INPUT_SEC[]="Emter new secomd:";
 char * INPUT[]={INPUT_YEAR,INPUT_MONTH,INPUT_DAY,INPUT_HOUR,INPUT_MIN,INPUT_SEC};
 
 

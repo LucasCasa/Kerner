@@ -4,19 +4,20 @@
 static uint8_t * const video = (uint8_t*)0xB8000;
 static uint8_t * currentVideo = (uint8_t*)0xB8000;
 static uint8_t * saved_current_video;
-static char * command_line = 0xB8000;
+static uint8_t * saved_command_line;
+static uint8_t * command_line = 0xB8000;
 
-char str_modifier = 0x02;
-char num_modifier = 0x04;
+uint8_t str_modifier = 0x02;
+uint8_t num_modifier = 0x04;
 
-char* saved_shell[160*25];
-char saved_modifier;
+uint8_t* saved_shell[160*25];
+uint8_t saved_modifier;
 
 void sys_write(char c,uint8_t mod);
 char sys_get_screen_char();
 void sys_delete_char();
 void modifie(char mod);
-char check_end_of_screen();
+char check_end_of_screen(char type);
 void set_default_modifiers(char s, char n);
 void set_new_modifier();
 void draw_new_line();

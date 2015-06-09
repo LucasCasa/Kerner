@@ -9,7 +9,7 @@ set_screensaver_time(){
 	do{
 		i = 0;
 		c = 1;
-		print_message("Ingrese valor (en segundos): \n",0xFF);
+		print_message("Enter value (in seconds): \n",0xFF);
 		while((c = get_char()) != '\n'){
 			value[i] = c;
 			i++;

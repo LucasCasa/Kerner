@@ -24,13 +24,13 @@ void show_keyboard();
 void modifie_colors();
 set_screensaver_time(uint32_t time);
 
-char* time_str = "Muestra el reloj";
-char* help_str = "Muestra comandos disponibles";
-char* change_time_str = "Cambia la fecha y hora del sistema";
-char* whoami_str = "Dice quien eres";
-char* keyboard_str = "Muestra la distribucion de las teclas";
-char* modi_str = "Cambiar colores de la consola";
-char* clear_str = "Borra la pantalla";
-char* saver_str = "cambia el tiempo hasta que aparezca el protector de pantalla";
+char* time_str = "Shows the time and the date";
+char* help_str = "shows all available commands";
+char* change_time_str = "change time and date";
+char* whoami_str = "who am i?";
+char* keyboard_str = "shows the keyboard distribution graphically";
+char* modi_str = "change the console set of colours";
+char* clear_str = "clear the screen";
+char* saver_str = "change the time till the screensaver appears";
 
 #endif

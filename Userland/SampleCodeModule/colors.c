@@ -1,17 +1,17 @@
 
 void modifie_colors(){
-	print_message("Selecciona color:\n",0xFF);
-	print_message("1- Fondo Negro, Letras Verdes,  Numeros Rojos (default)\n",0xFF);
-	print_message("2- Fondo Azul,  Letras Blancas, Numeros Verdes \n",0xFF);
-	print_message("3- Fondo Negro, Letras Amarillas,  Numeros celestes \n",0xFF);
-	print_message("4- Fondo Gris,  Letras Negras, Numeros Azules \n",0xFF);
-	print_message("5- Fondo Negro, Letras Rojas,   Numeros Blancos \n",0xFF);
+	print_message("Select Colors:\n",0xFF);
+	print_message("1- Black Background, Green Letters,  Red Numbers  (default)\n",0xFF);
+	print_message("2- Blue Background,  White Letters,  Green Numbers  \n",0xFF);
+	print_message("3- Black Background, Yellow Letters, Sky Blue Numbers  \n",0xFF);
+	print_message("4- Grey Background,  Black Letters,  Blue Numbers  \n",0xFF);
+	print_message("5- Black Background, Red Letterss,   Whilte Numbers  \n",0xFF);
 	char c = 0,i = 0,res = 0;
 	do{
 	c = 0;
 	i = 0;
 	res = 0;
-	print_message("Ingrese valor:\n",0xFF);
+	print_message("Enter value:\n",0xFF);
 	while( (c = get_char())  != '\n'){
 		i++;
 		//print_message(c);

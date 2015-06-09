@@ -38,6 +38,7 @@ void draw_new_line(){
 	*(currentVideo++) = num_modifier;
 	*(currentVideo++) = ':';
 	*(currentVideo++) = num_modifier;
+	set_command_line();
 }
 void reset_current_video(){
 	currentVideo = video;
@@ -49,6 +50,7 @@ void save_screen(){
 		saved_shell[i] = video[i];
 	}
 	saved_current_video = currentVideo;
+	saved_command_line = command_line;
 	currentVideo = video;
 }
 void restore_screen(){
@@ -56,7 +58,7 @@ void restore_screen(){
 		video[i] = saved_shell[i];
 	}
 	currentVideo = saved_current_video;
-	set_command_line();
+	command_line = saved_command_line;
 }
 void new_line(){
 	*currentVideo = 0;
@@ -64,15 +66,14 @@ void new_line(){
 	int aux;
 	aux = currentVideo - 0xB8000;
 	currentVideo = 0xB8000 + (aux + 160) - (aux % 160);
-	set_command_line();
 	draw_new_line();
 }
 void sys_write(char c,uint8_t mod){
+	char aux = 0;
 	switch(c){
 		case '\n':
 			new_line();
-			set_command_line();
-
+			aux = 1;
 			break;
 		case '\b':
 			sys_delete_char();
@@ -91,15 +92,17 @@ void sys_write(char c,uint8_t mod){
 			}
 			break;
 	}
-	check_end_of_screen();	
+	check_end_of_screen(aux);	
 }
 
-char check_end_of_screen(){
+char check_end_of_screen(char type){
 	if(currentVideo >= 0xB8000 + 160*25){
 		scroll();
 		currentVideo = 0xB8000 + 160*24;
-		draw_new_line();
-		set_command_line();
+		command_line -= 160;
+		if(type == 1){
+			draw_new_line();
+		}
 		return 1;
 	}
 	return 0;
@@ -132,7 +135,7 @@ void print_standby(){
 	
 }
 void set_command_line(){
-	command_line = (int)currentVideo - ((int)(currentVideo - video) % 160);
+	command_line = currentVideo - ((uint16_t)(currentVideo - 0xB8000) % 160);
 }
 
 int ssaver = 0;
