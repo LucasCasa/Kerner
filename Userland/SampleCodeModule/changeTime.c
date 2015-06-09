@@ -29,7 +29,7 @@ void changeTime(){
 
 void callSetters(unsigned int parameters[6]){
 	for(int i=0; i<6; i++){
-		_call_int80(9,i,parameters[i]);
+		_call_int80(INT_RTC_WRITE,i,parameters[i]);
 	}
 }
 

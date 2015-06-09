@@ -27,19 +27,19 @@ void modifie_colors(){
 
 	switch(res){
 		case 1:
-			_call_int80(10,0x02,0x04);
+			_call_int80(INT_COLORS,0x02,0x04);
 			break;
 		case 2:
-			_call_int80(10,0x1F,0x12);
+			_call_int80(INT_COLORS,0x1F,0x12);
 			break;
 		case 3:
-			_call_int80(10,0x0E,0x0B);
+			_call_int80(INT_COLORS,0x0E,0x0B);
 			break;
 		case 4:
-			_call_int80(10,0x70,0x71);
+			_call_int80(INT_COLORS,0x70,0x71);
 			break;
 		case 5:
-			_call_int80(10,0x04,0x0F);
+			_call_int80(INT_COLORS,0x04,0x0F);
 			break;
 	}
 }

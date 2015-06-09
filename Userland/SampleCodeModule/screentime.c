@@ -18,6 +18,6 @@ void set_screensaver_time(){
 		value[i] = 0;
 		res = atoi(value);
 	}while(res <= 0);
-	_call_int80(11,res);
+	_call_int80(INT_SCR_TIME,res);
 	return;
 }

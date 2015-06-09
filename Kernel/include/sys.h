@@ -7,16 +7,13 @@
 #include "rtc.h"
 
 #define WRITE 1
-#define DEL_CHAR 2
-#define SCR_CHAR 3
-#define GET_MOD 4
-#define ERASE_SCR 5
-#define GET_STR 6
-#define GET_CHAR 7
-#define RTC_READ 8
-#define RTC_WRITE 9
-#define COLORS 10
-#define SCR_TIME 11
+#define GET_CHAR 2
+#define GET_STR 3
+#define ERASE_SCR 4
+#define RTC_READ 5
+#define RTC_WRITE 6
+#define COLORS 7
+#define SCR_TIME 8
 
 char read(char* buff, uint8_t size);
 char read_char();

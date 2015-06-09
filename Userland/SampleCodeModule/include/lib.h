@@ -3,6 +3,15 @@
 
 #include <stdint.h>
 
+#define INT_WRITE 1
+#define INT_GET_CHAR 2
+#define INT_GET_STR 3
+#define INT_ERASE_SCR 4
+#define INT_RTC_READ 5
+#define INT_RTC_WRITE 6
+#define INT_COLORS 7
+#define INT_SCR_TIME 8
+
 void * memset(void * destination, int32_t character, uint64_t length);
 void * memcpy(void * destination, const void * source, uint64_t length);
 

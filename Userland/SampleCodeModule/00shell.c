@@ -71,16 +71,16 @@ void shell_show_commands(){
 }
 
 void shell_erase_screen(){
-	_call_int80(5);
+	_call_int80(INT_ERASE_SCR);
 }
 
 void showRTC(){
-	unsigned char seg = _call_int80(8,0);
-	unsigned char min = _call_int80(8,1);
-	unsigned char hora = _call_int80(8,2);
-	unsigned char dia = _call_int80(8,3);
-	unsigned char mes = _call_int80(8,4);
-	unsigned char anio = _call_int80(8,5);
+	unsigned char seg = _call_int80(INT_RTC_READ,0);
+	unsigned char min = _call_int80(INT_RTC_READ,1);
+	unsigned char hora = _call_int80(INT_RTC_READ,2);
+	unsigned char dia = _call_int80(INT_RTC_READ,3);
+	unsigned char mes = _call_int80(INT_RTC_READ,4);
+	unsigned char anio = _call_int80(INT_RTC_READ,5);
 	printf("Day: %d Month: %d Year: %d\n", 0xFF, dia,mes,anio);
 	printf("Time: %d:%d:%d \n", 0xFF,hora,min,seg);
 }

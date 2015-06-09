@@ -13,17 +13,6 @@ char sys_manager(int order,uint64_t arg1, uint64_t arg2){
 		case WRITE:
 			sys_write((char) arg1,(char) arg2);
 			break;
-
-		case DEL_CHAR:
-			sys_delete_char();
-			break;
-
-		case SCR_CHAR:
-			return sys_get_screen_char();
-			break;
-		case GET_MOD:
-			modifie((char)arg1);
-			break;
 		case ERASE_SCR:
 			erase_screen();
 			reset_current_video();

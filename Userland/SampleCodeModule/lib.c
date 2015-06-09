@@ -108,7 +108,7 @@ void printf(const char * string, uint8_t mod, ...){
 char get_char(){
 	char c;
 	do{
-		c = _call_int80(7);
+		c = _call_int80(INT_GET_CHAR);
 	}while(c == 0);
 	return c;
 }
