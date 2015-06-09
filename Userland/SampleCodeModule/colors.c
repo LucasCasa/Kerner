@@ -1,3 +1,5 @@
+#include "lib.h"
+#include "call80.h"
 
 void modifie_colors(){
 	print_message("Select Colors:\n",0xFF);

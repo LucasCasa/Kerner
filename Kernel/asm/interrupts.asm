@@ -2,27 +2,20 @@
 GLOBAL _cli
 GLOBAL _sti
 GLOBAL picMasterMask
-GLOBAL _write_port
 GLOBAL picSlaveMask
+GLOBAL _write_port
+
 GLOBAL _int_timer_hand
 GLOBAL _int_keyboard_hand
-GLOBAL _lidt
-GLOBAL haltcpu
-
-GLOBAL _irq00Handler
-GLOBAL _irq01Handler
-GLOBAL _irq02Handler
-GLOBAL _irq03Handler
-GLOBAL _irq04Handler
-GLOBAL _irq05Handler
 GLOBAL _int80_hand
+
+GLOBAL haltcpu
 GLOBAL _call_int80
 
-EXTERN irqDispatcher
+
 EXTERN timer_handler
 EXTERN keyboard_handler
 EXTERN sys_manager
-EXTERN print_message
 
 SECTION .text
 
@@ -62,47 +55,9 @@ picSlaveMask:
     pop     rbp
     retn
 
-_lidt:				; Carga el IDTR
-    push    rbp
-    mov     rbp, rsp
-    push    rbx
-    mov     rbx, [rbp + 6] ; ds:bx = puntero a IDTR
-	rol		rbx,16
-	lidt    [ds: rbx]          ; carga IDTR
-    pop     rbx
-    pop     rbp
-    retn
-
-
-;8254 Timer (Timer Tick)
-_irq00Handler:
-	jmp _int_timer_hand
-	
-;Keyboard
-_irq01Handler:
-	jmp _int_keyboard_hand
-
-;Cascade pic never called
-_irq02Handler:
-	iretq
-
-;Serial Port 2 and 4
-_irq03Handler:
-	iretq
-	
-;Serial Port 1 and 3	
-_irq04Handler:
-	iretq
-	
-;USB
-_irq05Handler:
-	iretq
-
-
 _int80_hand:
     call sys_manager
     iretq
-
 
 _int_timer_hand:				; Handler de INT 8 ( Timer tick)
    	push rdi

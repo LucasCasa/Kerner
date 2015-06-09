@@ -1,17 +1,18 @@
 #include "changeTime.h"
 #include "lib.h"
+#include "call80.h"
 
 
 void changeTime(){
 	unsigned int parameters[6];
 	int size = 6,i=0;
+	char aux[80];
 	//int year,month,day,hour,min,sec;
 	showRTC(); //Imprime el tiempo para que lo vea antes de preguntarle por cambiar
 	while(i<size){
-		char * aux;
 		int value;
 		print_message(INPUT[i],0xFF);
-		aux=readKeyboard();
+		readKeyboard(aux);
 		value=atoi(aux);
 		if(validate(value,MAX_VALUES[i],MIN_VALUES[i])){
 			if(i==2 && validateDay(value,parameters[i-1],parameters[i-2])==NO){	
@@ -54,13 +55,11 @@ int validateDay(int day, int month, int year){
 	return SI;
 }
 
-char * readKeyboard(){
-	char c = 0,j = 0;
-	char aux[80];
+void readKeyboard(char* buff){
+	unsigned char c = 0,j = 0;
 	while((c = get_char()) != '\n'&& j<80){ //lee lo ultimo que se escribio en el teclado
-			aux[j] = c;
+			buff[j] = c;
 			j++;
 	}
-	aux[j] = 0;
-	return aux;
+	buff[j] = 0;
 }

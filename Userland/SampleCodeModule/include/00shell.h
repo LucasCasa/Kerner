@@ -11,7 +11,7 @@ typedef struct {
 
 
 void * memset(void * destiny, int32_t c, uint64_t length);
-void init_commands(char index, char * name, char* description, void (*function)());
+void init_commands(unsigned char index, char * name, char* description, void (*function)());
 void showRTC();
 void shell_command();
 void shell_erase_screen();
@@ -22,7 +22,7 @@ void shell_exit();
 void whoami();
 void show_keyboard();
 void modifie_colors();
-set_screensaver_time(uint32_t time);
+void set_screensaver_time();
 
 char* time_str = "Shows the time and the date";
 char* help_str = "shows all available commands";

@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdarg.h>
-
+#include "lib.h"
+#include "call80.h"
 int isNumber(char a);
 
 void * memset(void * destination, int32_t c, uint64_t length)
@@ -14,7 +15,7 @@ void * memset(void * destination, int32_t c, uint64_t length)
 	return destination;
 }
 
-void print_message(uint8_t* message, uint8_t mod){
+void print_message(char* message, uint8_t mod){
 	int i = 0;
 	while(message[i] != 0){
 		_put_char(message[i],mod);
@@ -30,7 +31,7 @@ void print_number(uint32_t n){
 		_put_char((n % 10) + '0',0xFF);
 	}
 }
-int strcmp(const uint8_t *s1, const uint8_t *s2) {
+int strcmp(char *s1, char *s2) {
   int ret = 0;
   while (!(ret = *(uint8_t *) s1 - *(uint8_t *) s2) && *s2) ++s1, ++s2;
   if (ret < 0)
@@ -77,7 +78,7 @@ void putChar(uint8_t c,uint8_t mod){
 	_put_char(c,mod);
 }
 
-void printf(const char * string, int mod, ...){
+void printf(const char * string, uint8_t mod, ...){
 	char c;
 	va_list listpointer;
 	va_start(listpointer, mod);
@@ -112,7 +113,7 @@ char get_char(){
 	return c;
 }
 void flush_buffer(){
-	char c;
+	char c = 0;
 	while (c != '\n'){}
 	return;
 }
