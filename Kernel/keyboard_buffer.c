@@ -10,7 +10,7 @@ uint8_t size = 0;
 
 
 uint8_t keyboard_is_full(){
-	return (size == KB_SIZE);
+	return (size >= KB_SIZE - 2);
 }
 
 uint8_t keyboard_is_empty() {
@@ -47,6 +47,17 @@ uint8_t keyboard_set_key(uint8_t c) {
 		}
 		return 1;
 
+	}else if(c == '\b'){
+		keyboard_last--;
+		size--;
+		return 1;
+	}else if( c == '\n'){
+		keyboard_buffer[keyboard_last++] = c;
+		size++;
+		if( keyboard_last == KB_SIZE )
+			keyboard_last = 0;
+		load_user_buffer();
+		return 1;
 	}
 	
 	return 0;
