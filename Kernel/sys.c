@@ -18,7 +18,7 @@ char sys_manager(int order,uint64_t arg1, uint64_t arg2){
 			reset_current_video();
 			break;
 		case GET_STR:
-			return read( arg1,(uint8_t) arg2);
+			return read((char *)arg1,(uint8_t) arg2);
 			break;
 		case GET_CHAR:
 			c = read_char();
