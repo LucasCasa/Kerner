@@ -1,5 +1,9 @@
 #include <stdint.h>
 #include "rtc.h"
+
+extern _set_value(uint8_t r,uint8_t value);
+extern uint8_t _get_value(uint8_t);
+
 uint8_t BCDtoDecimal(uint8_t num){
 	int aux = 0;
 	aux = (num >> 4) * 10;

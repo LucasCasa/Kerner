@@ -1,5 +1,4 @@
 #include "video_manager.h"
-#include "sys_lib.h"
 
 static uint8_t * const video = (uint8_t*)0xB8000;
 static uint8_t * currentVideo = (uint8_t*)0xB8000;
@@ -31,7 +30,7 @@ void set_new_modifier(){
 char get_modifier(){
 	return *(currentVideo +1);
 }
-void modifie(char mod){
+void modify(char mod){
 	*(currentVideo + 1) = mod;
 }
 char sys_get_screen_char(){
@@ -139,10 +138,10 @@ void erase_screen(){
 }
 void print_standby(){
 	if(get_modifier() == 0x22){
-		modifie(saved_modifier);
+		modify(saved_modifier);
 	}else{
 		saved_modifier = get_modifier();
-		modifie(0x22);
+		modify(0x22);
 	}
 	
 }

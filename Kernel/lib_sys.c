@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "sys_lib.h"
 
 void * memset(void * destination, int32_t c, uint64_t length)
 {
@@ -63,3 +64,4 @@ void print_message(uint8_t* message, uint8_t mod){
 		i++;
 	}
 }
+

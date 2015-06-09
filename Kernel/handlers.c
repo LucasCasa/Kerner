@@ -2,10 +2,7 @@
 #include "include/handlers.h"
 
 
-static int i = 0;
 static int time = 0;
-static char light = 0;
-static char aux = 1;
 uint16_t sleep_time = 0;
 uint32_t screensaver_time = 5 * 1000 / 55;
 

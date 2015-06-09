@@ -1,5 +1,9 @@
 #include <stdint.h>
 #include "sys.h"
+#include "video_manager.h"
+#include "rtc.h"
+#include "clean_buffer.h"
+
 //syscall 1 ---> escribo en pantalla
 //syscall 2 ---> borro caracter
 //syscall 3 ---> devuelvo el ultimo caracter
@@ -22,7 +26,7 @@ char sys_manager(int order,uint64_t arg1, uint64_t arg2){
 			return sys_get_screen_char();
 			break;
 		case GET_MOD:
-			modifie((char)arg1);
+			modify((char)arg1);
 			break;
 		case ERASE_SCR:
 			erase_screen();

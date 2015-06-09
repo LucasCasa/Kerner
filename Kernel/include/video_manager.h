@@ -2,11 +2,12 @@
 #define VIDEO_MANAGER_H
 
 #include "stdint.h"
+#include "sys_lib.h"
 
 void sys_write(char c,uint8_t mod);
 char sys_get_screen_char();
 void sys_delete_char();
-void modifie(char mod);
+void modify(char mod);
 char check_end_of_screen(char type);
 void set_default_modifiers(char s, char n);
 void set_new_modifier();
