@@ -2,6 +2,9 @@
 #define SYS_H_
 
 #include "stdint.h"
+#include "sys_lib.h"
+#include "clean_buffer.h"
+#include "rtc.h"
 
 #define WRITE 1
 #define DEL_CHAR 2
@@ -15,7 +18,7 @@
 #define COLORS 10
 #define SCR_TIME 11
 
-char read(char* buff, char size);
+char read(char* buff, uint8_t size);
 char read_char();
 char sys_manager(int order, uint64_t arg1, uint64_t arg2);
 extern uint32_t screensaver_time;

@@ -1,5 +1,17 @@
-#include "stdint.h"
 #include "video_manager.h"
+#include "sys_lib.h"
+
+static uint8_t * const video = (uint8_t*)0xB8000;
+static uint8_t * currentVideo = (uint8_t*)0xB8000;
+static uint8_t * saved_current_video;
+static uint8_t * saved_command_line;
+static uint8_t * command_line = (uint8_t*)0xB8000;
+
+uint8_t str_modifier = 0x02;
+uint8_t num_modifier = 0x04;
+
+uint8_t * saved_shell[160*25];
+uint8_t saved_modifier;
 
 
 void set_default_modifiers(char s, char n){
@@ -9,7 +21,7 @@ void set_default_modifiers(char s, char n){
 }
 void set_new_modifier(){
 	for(int i = 0; i<160*25;i++){
-		if(isNumber(video[i]) || i % 160 < 4){
+		if(isNumber((char) video[i]) || i % 160 < 4){
 			video[++i] = num_modifier;
 		}else{
 			video[++i] = str_modifier;
@@ -26,7 +38,7 @@ char sys_get_screen_char(){
 	return *(currentVideo - 2);
 }
 void sys_delete_char(){
-	if((int)currentVideo - (int)command_line > 4){
+	if(currentVideo - command_line > 4){
 		*(currentVideo + 1) = str_modifier;
 		currentVideo -=2;
 		*(currentVideo) = 0;
@@ -64,8 +76,8 @@ void new_line(){
 	*currentVideo = 0;
 	*(currentVideo+1) = saved_modifier;
 	int aux;
-	aux = currentVideo - 0xB8000;
-	currentVideo = 0xB8000 + (aux + 160) - (aux % 160);
+	aux = (uint64_t)currentVideo - 0xB8000;
+	currentVideo = (uint8_t*)(0xB8000 + (aux + 160) - (aux % 160));
 	draw_new_line();
 }
 void sys_write(char c,uint8_t mod){
@@ -96,9 +108,9 @@ void sys_write(char c,uint8_t mod){
 }
 
 char check_end_of_screen(char type){
-	if(currentVideo >= 0xB8000 + 160*25){
+	if(currentVideo >= (uint8_t *)(0xB8000 + 160*25)){
 		scroll();
-		currentVideo = 0xB8000 + 160*24;
+		currentVideo = (uint8_t *)(0xB8000 + 160*24);
 		command_line -= 160;
 		if(type == 1){
 			draw_new_line();
@@ -135,59 +147,5 @@ void print_standby(){
 	
 }
 void set_command_line(){
-	command_line = currentVideo - ((uint16_t)(currentVideo - 0xB8000) % 160);
-}
-
-int ssaver = 0;
-void show_screensaver(){
-	erase_screen();
-	reset_current_video();
-	switch(ssaver){
-		case 0:
-			lucas();
-			ssaver++;
-			break;
-		case 1:
-			maggie();
-			ssaver++;
-			break;
-		case 2:
-			kuyum();
-			ssaver = 0;
-			break;
-	}
-}
-
-
-void maggie(){
-	print_message(" _______  _______  _______  _______ _________ _______ \n",0xFF);
-	print_message("(       )(  ___  )(  ____ \\(  ____ \\\\__   __/(  ____ \\ \n",0xFF);
-	print_message("| () () || (   ) || (    \\/| (    \\/   ) (   | (    \\/ \n",0xFF);
-	print_message("| || || || (___) || |      | |         | |   | (__  \n",0xFF);
-	print_message("| |(_)| ||  ___  || | ____ | | ____    | |   |  __)   \n",0xFF);
-	print_message("| |   | || (   ) || | \\_  )| | \\_  )   | |   | (   \n",0xFF);
-	print_message("| )   ( || )   ( || (___) || (___) |___) (___| (____/\\ \n",0xFF);
-	print_message("|/     \\||/     \\|(_______)(_______)\\_______/(_______/ \n",0xFF);
-}
-
-void lucas(){
-	print_message(" _                 _______  _______  _______ \n",0xFF);
-	print_message("( \\      |\\     /|(  ____ \\(  ___  )(  ____ \\ \n",0xFF);
-	print_message("| (      | )   ( || (    \\/| (   ) || (    \\/ \n",0xFF);
-	print_message("| |      | |   | || |      | (___) || (_____  \n",0xFF);
-	print_message("| |      | |   | || |      |  ___  |(_____  ) \n",0xFF);
-	print_message("| |      | |   | || |      | (   ) |      ) | \n",0xFF);
-	print_message("| (____/\\| (___) || (____/\\| )   ( |/\\____) | \n",0xFF);
-	print_message("(_______/(_______)(_______/|/     \\|\\_______) \n",0xFF);
-}
-
-void kuyum(){
-	print_message(" _                                   _______ \n",0xFF);
-	print_message("| \\    /\\|\\     /||\\     /||\\     /|(       )\n",0xFF);
-	print_message("|  \\  / /| )   ( |( \\   / )| )   ( || () () | \n",0xFF);
-	print_message("|  (_/ / | |   | | \\ (_) / | |   | || || || | \n",0xFF);
-	print_message("|   _ (  | |   | |  \\   /  | |   | || |(_)| | \n",0xFF);
-	print_message("|  ( \\ \\ | |   | |   ) (   | |   | || |   | | \n",0xFF);
-	print_message("|  /  \\ \\| (___) |   | |   | (___) || )   ( | \n",0xFF);
-	print_message("|_/    \\/(_______)   \\_/   (_______)|/     \\| \n",0xFF);
+	command_line = currentVideo - ((uint64_t)(currentVideo - 0xB8000) % 160);
 }

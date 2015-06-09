@@ -1,9 +1,5 @@
 #include <stdint.h>
 #include "rtc.h"
-
-uint8_t DecimaltoBCD(uint8_t n);
-uint8_t BCDtoDecimal(uint8_t num);
-
 uint8_t BCDtoDecimal(uint8_t num){
 	int aux = 0;
 	aux = (num >> 4) * 10;

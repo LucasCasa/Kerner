@@ -11,4 +11,11 @@
 	unsigned char getValue(char r);
 	/* setea el valor value*/
 	void setValue(char r,unsigned char value);
+
+	uint8_t DecimaltoBCD(uint8_t n);
+	uint8_t BCDtoDecimal(uint8_t num);
+
+	unsigned char RTCparameters(char arg);
+	void set_date(char arg, uint32_t value);
+
 #endif

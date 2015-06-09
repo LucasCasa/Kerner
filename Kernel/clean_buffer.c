@@ -1,11 +1,13 @@
- #include "include/keyboard_buffer.h"
+#include "keyboard_buffer.h"
+#include "clean_buffer.h"
 
  char Cbuffer[255];
 
  char actual_pos = 0;
  char last_pos = 0;
  char Csize = 0;
-char C_is_empty();
+
+
 
 void clean_set_char(char c){
 		Cbuffer[last_pos++] = c;

@@ -1,11 +1,12 @@
 #include <stdint.h>
+#include "lib.h"
+#include "call80.h"
 
-set_screensaver_time(){
+void set_screensaver_time(){
 	char value[10];
 	uint8_t c = 1;
 	int res = 0;
 	uint8_t i = 0;
-	uint8_t flag = 0;
 	do{
 		i = 0;
 		c = 1;
@@ -18,4 +19,5 @@ set_screensaver_time(){
 		res = atoi(value);
 	}while(res <= 0);
 	_call_int80(11,res);
+	return;
 }

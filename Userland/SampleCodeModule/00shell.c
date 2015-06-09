@@ -1,5 +1,8 @@
 #include "stdint.h"
 #include "00shell.h"
+#include "call80.h"
+#include "lib.h"
+
 
 Command commands[8];
 char comm[20];
@@ -7,12 +10,12 @@ int number_of_commands = 8;
 char aux;
 char name[20] = {0};
 
+
 extern char bss;
 extern char endOfBinary;
 extern uint8_t data;
 extern uint8_t text;
 extern uint8_t rodata;
-
 
 int main(){
 	memset(&bss, 0, &endOfBinary - &bss);
@@ -32,7 +35,7 @@ int main(){
 	}
 }
 
-void init_commands(char index, char * name, char* description, void (*function)()){
+void init_commands(unsigned char index, char * name, char* description, void (*function)()){
 	commands[index].name = name;
 	commands[index].description = description;
 	commands[index].function = function;
@@ -40,8 +43,7 @@ void init_commands(char index, char * name, char* description, void (*function)(
 
 void shell_command(){
 	char valid_command = 0;
-	char c = 0,j = 0;
-	int size;
+	unsigned char c = 0,j = 0;
 	while((c = get_char()) != '\n'){
 		comm[j++] = c;
 	}
@@ -85,7 +87,7 @@ void showRTC(){
 
 void whoami(){
 	if(name[0] == 0){
-		char c = 0,i = 0;
+		unsigned char c = 0,i = 0;
 		print_message("No se... Quien sos?\n",0xFF);
 		while((c = get_char()) != '\n' && i<19){
 			name[i++] = c;
