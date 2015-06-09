@@ -17,11 +17,12 @@ extern uint8_t data;
 extern uint8_t text;
 extern uint8_t rodata;
 
+
 int main(){
 	memset(&bss, 0, &endOfBinary - &bss);
 
 	shell_erase_screen();
-	print_message("Bienvenidos al mejor TP de la historia\n", 0x12);
+	print_message("Bienvenidos a ArquiMedes\n", 0x12);
 	init_commands(0,"clear", clear_str ,&shell_erase_screen);
 	init_commands(1,"time", time_str , &showRTC);
 	init_commands(2,"help" , help_str, &shell_show_commands);
@@ -49,6 +50,7 @@ void shell_command(){
 	}
 
 	comm[j] = 0;
+
 	for(int i = 0;i<number_of_commands;i++){
 		if(strcmp(comm,commands[i].name) == 0){
 			commands[i].function();
