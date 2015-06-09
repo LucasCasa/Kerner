@@ -92,6 +92,8 @@ void whoami(){
 		while((c = get_char()) != '\n' && i<19){
 			name[i++] = c;
 		}
+		if(i==19)
+			flush_buffer();
 	}else{
 		printf("%s \n",0xFF,name);
 	}

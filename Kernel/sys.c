@@ -34,9 +34,8 @@ char sys_manager(int order,uint64_t arg1, uint64_t arg2){
 			set_default_modifiers((uint8_t) arg1, (uint8_t) arg2);
 			break;
 		case SCR_TIME:
-				screensaver_time =  arg1 * 1000 / 55;
+			return validateScreenTime(arg1);
 			break;
-
 	}
 	return 0;
 }

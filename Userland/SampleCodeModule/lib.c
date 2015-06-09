@@ -84,10 +84,7 @@ void printf(const char * string, uint8_t mod, ...){
 	va_start(listpointer, mod);
 	for(int i=0; string[i] != '\0'; i++){
 		c = string[i];
-		/*if(c=='\n'){
-			//new_line();
-		}
-		else */if(c == '%'){
+		if(c == '%'){
 			switch(string[i+1]){
 				case 'd':	print_number(va_arg(listpointer,int));
 							i++;
@@ -112,8 +109,9 @@ char get_char(){
 	}while(c == 0);
 	return c;
 }
+
 void flush_buffer(){
 	char c = 0;
-	while (c != '\n'){}
+	while ((c=get_char()) != '\n'){};
 	return;
 }

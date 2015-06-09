@@ -6,7 +6,7 @@
 void changeTime(){
 	unsigned int parameters[6];
 	int size = 6,i=0;
-	char aux[80];
+	char aux[10];
 	//int year,month,day,hour,min,sec;
 	showRTC(); //Imprime el tiempo para que lo vea antes de preguntarle por cambiar
 	while(i<size){
@@ -57,9 +57,11 @@ int validateDay(int day, int month, int year){
 
 void readKeyboard(char* buff){
 	unsigned char c = 0,j = 0;
-	while((c = get_char()) != '\n'&& j<80){ //lee lo ultimo que se escribio en el teclado
+	while((c = get_char()) != '\n'&& j<10){ //lee lo ultimo que se escribio en el teclado
 			buff[j] = c;
 			j++;
 	}
 	buff[j] = 0;
+	if(j==10)
+		flush_buffer();
 }

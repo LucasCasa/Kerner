@@ -1,4 +1,5 @@
 #include "screensaver.h"
+#include "sys.h"
 
 int ssaver = 0;
 void show_screensaver(){
@@ -20,6 +21,16 @@ void show_screensaver(){
 	}
 }
 
+int validateScreenTime(int time){
+	if(time <= 0){		// Error for invalid value
+		return 0;
+	}
+	if(time > MINSCRSAVERTIME){ // If the time is too big, it is set to a default value
+		time = MINSCRSAVERTIME;
+	}
+	screensaver_time = time * 1000 / 55;
+	return 1;
+}
 
 void maggie(){
 	print_message(" _______  _______  _______  _______ _________ _______ \n",0xFF);
