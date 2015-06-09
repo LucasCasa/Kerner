@@ -32,6 +32,7 @@ void * getStackBase()
 	);
 }
 
+
 void * initializeKernelBinary()
 {
 	char buffer[10];

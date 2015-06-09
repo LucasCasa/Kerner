@@ -96,7 +96,6 @@ uint8_t keyboard[90][2] = {
 	{0,0},//087 F11
 	{0,0},//088 F12
 	{'+','*'},	//089
-	{'+','*'}
 };
 uint8_t check_special_key(uint8_t c){
 	if(c == 58){

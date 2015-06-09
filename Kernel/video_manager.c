@@ -9,7 +9,7 @@ static uint8_t * command_line = (uint8_t*)0xB8000;
 uint8_t str_modifier = 0x02;
 uint8_t num_modifier = 0x04;
 
-uint8_t * saved_shell[160*25];
+uint8_t saved_shell[160*25];
 uint8_t saved_modifier;
 
 
@@ -74,7 +74,7 @@ void restore_screen(){
 void new_line(){
 	*currentVideo = 0;
 	*(currentVideo+1) = saved_modifier;
-	int aux;
+	uint64_t aux;
 	aux = (uint64_t)currentVideo - 0xB8000;
 	currentVideo = (uint8_t*)(0xB8000 + (aux + 160) - (aux % 160));
 	draw_new_line();
